@@ -1,0 +1,25 @@
+{
+  "name": "browser-challenge-runner",
+  "version": "1.0.0",
+  "description": "Fast browser automation for navigating challenge screens with Groq AI",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node src/index.ts --headless false",
+    "test": "jest"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "groq-sdk": "^0.3.0",
+    "dotenv": "^16.3.1",
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0"
+  }
+}

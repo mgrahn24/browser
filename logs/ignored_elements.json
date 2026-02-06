@@ -1,0 +1,684 @@
+[
+  {
+    "tag": "div",
+    "id": "ai-7",
+    "position": "relative"
+  },
+  {
+    "tag": "div",
+    "id": "ai-9",
+    "layerZ": 100,
+    "position": "relative"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1379",
+    "layerZ": 100,
+    "position": "relative"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1389",
+    "layerZ": 100,
+    "position": "absolute"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1390",
+    "layerZ": 100,
+    "text": "Content Block  1  Loaded!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1391",
+    "layerZ": 100,
+    "text": "This content appeared  500 ms after page load."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1392",
+    "layerZ": 100,
+    "position": "absolute"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1393",
+    "layerZ": 100,
+    "text": "Content Block  2  Loaded!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1394",
+    "layerZ": 100,
+    "text": "This content appeared  1500 ms after page load."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1395",
+    "layerZ": 100,
+    "position": "absolute"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1396",
+    "layerZ": 100,
+    "text": "Content Block  3  Loaded!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1397",
+    "layerZ": 100,
+    "text": "This content appeared  2500 ms after page load."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1398",
+    "layerZ": 100,
+    "position": "absolute"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1399",
+    "layerZ": 100,
+    "text": "Content Block  4  Loaded!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1400",
+    "layerZ": 100,
+    "text": "This content appeared  3500 ms after page load."
+  },
+  {
+    "tag": "div",
+    "id": "ai-339",
+    "layerZ": 100,
+    "position": "relative"
+  },
+  {
+    "tag": "input",
+    "id": "ai-342",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "text",
+    "placeholder": "Enter 6-character code",
+    "text": "Enter 6-character code"
+  },
+  {
+    "tag": "button",
+    "id": "ai-343",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "not-allowed",
+    "text": "Submit Code"
+  },
+  {
+    "tag": "div",
+    "id": "ai-344",
+    "layerZ": 100,
+    "position": "relative"
+  },
+  {
+    "tag": "button",
+    "id": "ai-345",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Next Section"
+  },
+  {
+    "tag": "button",
+    "id": "ai-346",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Continue"
+  },
+  {
+    "tag": "button",
+    "id": "ai-347",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Next"
+  },
+  {
+    "tag": "button",
+    "id": "ai-348",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Advance"
+  },
+  {
+    "tag": "button",
+    "id": "ai-349",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Continue Journey"
+  },
+  {
+    "tag": "button",
+    "id": "ai-350",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Proceed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-351",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Move On"
+  },
+  {
+    "tag": "button",
+    "id": "ai-352",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Click Here"
+  },
+  {
+    "tag": "button",
+    "id": "ai-353",
+    "interactive": 1,
+    "layerZ": 100,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Next Step"
+  },
+  {
+    "tag": "button",
+    "id": "ai-433",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "pointer",
+    "text": "Keep Going"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1401",
+    "layerZ": 9999,
+    "position": "fixed"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1404",
+    "layerZ": 9999
+  },
+  {
+    "tag": "div",
+    "id": "ai-1407",
+    "layerZ": 338,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Button!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1408",
+    "layerZ": 9998,
+    "position": "fixed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-1409",
+    "interactive": 1,
+    "layerZ": 9998,
+    "visibility": 0,
+    "position": "absolute",
+    "cursor": "pointer"
+  },
+  {
+    "tag": "svg",
+    "id": "ai-1410",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "path",
+    "id": "ai-1411",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "path",
+    "id": "ai-1412",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1413",
+    "layerZ": 9998,
+    "text": "You have won a prize!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1414",
+    "layerZ": 9998,
+    "text": "This is a popup message.  Click X to close."
+  },
+  {
+    "tag": "button",
+    "id": "ai-1415",
+    "interactive": 1,
+    "layerZ": 9998,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Close"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1416",
+    "layerZ": 295,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Link!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1417",
+    "layerZ": 228,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Click Me!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1418",
+    "layerZ": 422,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Click Me!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1419",
+    "layerZ": 561,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Link!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1420",
+    "layerZ": 317,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Click Here!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1421",
+    "layerZ": 9998,
+    "position": "fixed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-1422",
+    "interactive": 1,
+    "layerZ": 9998,
+    "visibility": 0,
+    "position": "absolute",
+    "cursor": "pointer"
+  },
+  {
+    "tag": "svg",
+    "id": "ai-1423",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "path",
+    "id": "ai-1424",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "path",
+    "id": "ai-1425",
+    "layerZ": 9998,
+    "cursor": "pointer"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1426",
+    "layerZ": 9998,
+    "text": "Important Notice!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1427",
+    "layerZ": 9998,
+    "text": "This is a popup message.  Click X to close."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1429",
+    "layerZ": 526,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Try This!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1430",
+    "layerZ": 248,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Click Me!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1431",
+    "layerZ": 413,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Link!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1432",
+    "layerZ": 467,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Link!"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1434",
+    "layerZ": 9997,
+    "position": "relative"
+  },
+  {
+    "tag": "h2",
+    "id": "ai-1435",
+    "layerZ": 9997,
+    "text": "Newsletter Signup"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1436",
+    "layerZ": 9997,
+    "text": "Subscribe to get updates!   Click the button to dismiss."
+  },
+  {
+    "tag": "button",
+    "id": "ai-1437",
+    "interactive": 1,
+    "layerZ": 9997,
+    "visibility": 0,
+    "cursor": "pointer",
+    "text": "Close"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1438",
+    "layerZ": 9998,
+    "position": "fixed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-1439",
+    "interactive": 1,
+    "layerZ": 9998,
+    "position": "absolute",
+    "cursor": "not-allowed"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1440",
+    "layerZ": 9998,
+    "text": "Subscribe to our newsletter!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1441",
+    "layerZ": 9998,
+    "text": "This is a popup message.  The close button is fake! Look for another way to close."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1443",
+    "layerZ": 9998,
+    "position": "fixed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-1444",
+    "interactive": 1,
+    "layerZ": 9998,
+    "position": "absolute",
+    "cursor": "not-allowed"
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1445",
+    "layerZ": 9998,
+    "text": "Alert!"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1446",
+    "layerZ": 9998,
+    "text": "This is a popup message.  The close button is fake! Look for another way to close."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1449",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1452",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1454",
+    "layerZ": 9996
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1455",
+    "layerZ": 9996,
+    "text": "Section 1: Introduction"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1456",
+    "layerZ": 9996,
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
+  {
+    "tag": "p",
+    "id": "ai-1457",
+    "layerZ": 9996,
+    "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1458",
+    "layerZ": 9996
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1459",
+    "layerZ": 9996,
+    "text": "Section 2: Important Information"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1460",
+    "layerZ": 9996,
+    "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  },
+  {
+    "tag": "p",
+    "id": "ai-1461",
+    "layerZ": 9996,
+    "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1462",
+    "layerZ": 9996
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1463",
+    "layerZ": 9996,
+    "text": "Section 3: Additional Details"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1464",
+    "layerZ": 9996,
+    "text": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
+  },
+  {
+    "tag": "p",
+    "id": "ai-1465",
+    "layerZ": 9996,
+    "text": "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1466",
+    "layerZ": 9996
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1467",
+    "layerZ": 9996,
+    "text": "Section 4: More Information"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1468",
+    "layerZ": 9996,
+    "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+  },
+  {
+    "tag": "p",
+    "id": "ai-1469",
+    "layerZ": 9996,
+    "text": "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1470",
+    "layerZ": 9996
+  },
+  {
+    "tag": "h3",
+    "id": "ai-1471",
+    "layerZ": 9996,
+    "text": "Section 5: Extended Content"
+  },
+  {
+    "tag": "p",
+    "id": "ai-1472",
+    "layerZ": 9996,
+    "text": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium."
+  },
+  {
+    "tag": "p",
+    "id": "ai-1473",
+    "layerZ": 9996,
+    "text": "Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati."
+  },
+  {
+    "tag": "div",
+    "id": "ai-1474",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1477",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1481",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1484",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1487",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1490",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1493",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1496",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1499",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1502",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1505",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1508",
+    "layerZ": 9996
+  },
+  {
+    "tag": "div",
+    "id": "ai-1511",
+    "layerZ": 9996
+  },
+  {
+    "tag": "button",
+    "id": "ai-1514",
+    "interactive": 1,
+    "layerZ": 9996,
+    "visibility": 0,
+    "cursor": "not-allowed",
+    "text": "Submit & Continue"
+  },
+  {
+    "tag": "div",
+    "id": "ai-1515",
+    "layerZ": 100
+  }
+]
