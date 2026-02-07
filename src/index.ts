@@ -46,6 +46,13 @@ export class Runner {
 
         const page = await context.newPage();
 
+        // Set auto mode on strategies
+        this.config.strategies.forEach(strategy => {
+            if ('setAutoMode' in strategy && typeof strategy.setAutoMode === 'function') {
+                (strategy as any).setAutoMode(this.autoMode);
+            }
+        });
+
         // Setup keyboard listeners
         if (process.stdin.isTTY) {
             process.stdin.setRawMode(true);
@@ -62,11 +69,13 @@ export class Runner {
                 } else if (key.toLowerCase() === 'm') {
                     this.autoMode = !this.autoMode;
 
-                    // Update debug mode in all strategies
-                    const newDebugMode = !this.autoMode;
+                    // Update auto mode and keep debug mode always enabled
                     this.config.strategies.forEach(strategy => {
+                        if ('setAutoMode' in strategy && typeof strategy.setAutoMode === 'function') {
+                            (strategy as any).setAutoMode(this.autoMode);
+                        }
                         if ('setDebugMode' in strategy && typeof strategy.setDebugMode === 'function') {
-                            (strategy as any).setDebugMode(newDebugMode);
+                            (strategy as any).setDebugMode(true);
                         }
                     });
 
@@ -116,37 +125,10 @@ export class Runner {
                     // Small delay between rounds to let page settle naturally
                     await page.waitForTimeout(500);
                 } else {
-                    console.log('Available Strategies:');
-                    this.config.strategies.forEach((s, i) => {
-                        console.log(`  ${i + 1}. ${s.name}`);
-                    });
-
-                    console.log('\nPress [1-' + this.config.strategies.length + '] to run a strategy, or Ctrl+C to stop...');
-
-                    // Use raw mode to capture keypress
-                    const strategyIndex = await new Promise<number>((resolve) => {
-                        const handleKey = (data: Buffer) => {
-                            const key = data.toString();
-
-                            // Handle Ctrl+C (SIGINT)
-                            if (key === '\u0003') {
-                                console.log('\n\nStopping...');
-                                process.exit(0);
-                            }
-
-                            const num = parseInt(key);
-                            if (!isNaN(num) && num > 0 && num <= this.config.strategies.length) {
-                                process.stdin.removeListener('data', handleKey);
-                                // Keep raw mode on so 'M' and 'P' keys continue working
-                                resolve(num - 1);
-                            }
-                        };
-
-                        // Raw mode is already on from initial setup, just add the listener
-                        process.stdin.on('data', handleKey);
-                    });
-
-                    strategy = this.config.strategies[strategyIndex];
+                    // Manual mode: always use ai-relevance strategy
+                    const aiStrategy = this.config.strategies.find(s => s.name === 'ai-relevance');
+                    strategy = aiStrategy || this.config.strategies[0];
+                    console.log(`\n[MANUAL] Using ${strategy.name}...`);
                 }
 
                 console.log(`\nExecuting: ${strategy.name}`);
@@ -184,6 +166,7 @@ async function main() {
     let url = '';
     let headless = true;
     let auto = false;
+    let usePatternFiltering = true;
 
     for (let i = 0; i < args.length; i++) {
         if (args[i] === '-u' || args[i] === '--url') {
@@ -194,24 +177,26 @@ async function main() {
             headless = true;
         } else if (args[i] === '--auto') {
             auto = true;
+        } else if (args[i] === '--no-filter') {
+            usePatternFiltering = false;
         }
     }
 
     if (!url) {
-        console.log('Usage: npm start -- -u <url> [--no-headless] [--auto]');
+        console.log('Usage: npm start -- -u <url> [--no-headless] [--auto] [--no-filter]');
         process.exit(1);
     }
 
     // Expose all available strategies for selection
-    // Enable debug mode (step-through) when not in auto mode
-    const debugMode = !auto;
+    // Always enable debug mode to show visual overlays
+    const debugMode = true;
 
     const runner = new Runner({
         targetUrl: url,
         headless,
         auto,
         strategies: [
-            new AIRelevanceStrategy(200, debugMode)
+            new AIRelevanceStrategy(200, debugMode, usePatternFiltering)
         ],
     });
 

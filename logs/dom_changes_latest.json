@@ -1,0 +1,130 @@
+{
+  "timestamp": "2026-02-07T17:05:34.101Z",
+  "round": 2,
+  "urlChanged": null,
+  "structuralChanges": {
+    "removed": [],
+    "added": []
+  },
+  "contentChanges": {
+    "textChanged": [
+      {
+        "id": "ai-20",
+        "before": "Next Section",
+        "after": "Continue"
+      },
+      {
+        "id": "ai-21",
+        "before": "Go Forward",
+        "after": "Next"
+      },
+      {
+        "id": "ai-22",
+        "before": "Proceed",
+        "after": "Next"
+      },
+      {
+        "id": "ai-23",
+        "before": "Go Forward",
+        "after": "Keep Going"
+      },
+      {
+        "id": "ai-24",
+        "before": "Advance",
+        "after": "Proceed"
+      },
+      {
+        "id": "ai-25",
+        "before": "Advance",
+        "after": "Click Here"
+      },
+      {
+        "id": "ai-26",
+        "before": "Keep Going",
+        "after": "Next Step"
+      },
+      {
+        "id": "ai-27",
+        "before": "Click Here",
+        "after": "Next"
+      },
+      {
+        "id": "ai-28",
+        "before": "Click Here",
+        "after": "Next Step"
+      },
+      {
+        "id": "ai-29",
+        "before": "Next",
+        "after": "Keep Going"
+      },
+      {
+        "id": "ai-30",
+        "before": "Move On",
+        "after": "Next Section"
+      },
+      {
+        "id": "ai-31",
+        "before": "Continue",
+        "after": "Next Page"
+      },
+      {
+        "id": "ai-32",
+        "before": "Next Section",
+        "after": "Proceed"
+      },
+      {
+        "id": "ai-33",
+        "before": "Proceed",
+        "after": "Continue Reading"
+      },
+      {
+        "id": "ai-339",
+        "before": "Enter Code to Proceed to Step 8:\nSubmit Code",
+        "after": "Enter Code to Proceed to Step 8:\n✓ Submitted\n\n✓ Code accepted! Proceeding to step 8..."
+      },
+      {
+        "id": "ai-341",
+        "before": "Submit Code",
+        "after": "✓ Submitted"
+      },
+      {
+        "id": "ai-343",
+        "before": "Submit Code",
+        "after": "✓ Submitted"
+      }
+    ],
+    "valueChanged": [
+      {
+        "id": "ai-342",
+        "tag": "input",
+        "before": "",
+        "after": "5QRG7N"
+      }
+    ],
+    "checkedChanged": []
+  },
+  "actions": [
+    {
+      "type": "key",
+      "value": "Control+A"
+    },
+    {
+      "type": "key",
+      "value": "Control+C"
+    },
+    {
+      "type": "key",
+      "value": "Control+V"
+    },
+    {
+      "type": "input",
+      "selector": "#ai-342",
+      "value": "5QRG7N"
+    },
+    {
+      "type": "click",
+      "selector": "#ai-343"
+    }
+  ]
+}

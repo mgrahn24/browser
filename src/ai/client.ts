@@ -1,11 +1,15 @@
 import Groq from 'groq-sdk';
 import * as dotenv from 'dotenv';
+import * as fs from 'fs';
+import * as path from 'path';
 
 dotenv.config();
 
 export class AIClient {
     private client: Groq;
     private model = 'openai/gpt-oss-120b'; // Fast, good at JSON
+    private callCounter = 0;
+    private lastAnalyzeDOMLogPath: string | null = null;
 
     constructor() {
         if (!process.env.GROQ_API_KEY) {
@@ -14,16 +18,69 @@ export class AIClient {
         this.client = new Groq({
             apiKey: process.env.GROQ_API_KEY
         });
+
+        // Ensure logs directory exists
+        const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
+        if (!fs.existsSync(logsDir)) {
+            fs.mkdirSync(logsDir, { recursive: true });
+        }
+    }
+
+    private logAICall(type: string, prompt: string, input: any, response: any, timing: { durationMs: number }, tokenUsage?: any): string | null {
+        try {
+            this.callCounter++;
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const filename = `${timestamp}_${this.callCounter}_${type}.json`;
+            const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
+            const filepath = path.join(logsDir, filename);
+
+            const logData = {
+                timestamp: new Date().toISOString(),
+                callNumber: this.callCounter,
+                type,
+                model: this.model,
+                durationMs: timing.durationMs,
+                tokenUsage,
+                prompt,
+                input,
+                response
+            };
+
+            fs.writeFileSync(filepath, JSON.stringify(logData, null, 2));
+            console.log(`[AI] Logged call to: logs/ai-calls/${filename} (${timing.durationMs}ms, tokens: ${tokenUsage?.total_tokens || 'unknown'})`);
+            return filepath;
+        } catch (error) {
+            console.error('[AI] Failed to log AI call:', error);
+            return null;
+        }
+    }
+
+    updateLogWithActionResults(filepath: string, actionResults: any[]): void {
+        try {
+            if (!filepath || !fs.existsSync(filepath)) return;
+
+            const logData = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+            logData.actionResults = actionResults;
+            fs.writeFileSync(filepath, JSON.stringify(logData, null, 2));
+        } catch (error) {
+            console.error('[AI] Failed to update log with action results:', error);
+        }
+    }
+
+    updateLastAnalyzeDOMWithResults(actionResults: any[]): void {
+        if (this.lastAnalyzeDOMLogPath) {
+            this.updateLogWithActionResults(this.lastAnalyzeDOMLogPath, actionResults);
+        }
     }
 
     async analyzeDOM(domTree: any, pastAttempts?: string): Promise<any> {
         const prompt = `
     You are a browser automation agent.
-    
+
     Task:
     1. Receive a COMPRESSED DOM Tree.
     2. Analyze the compressed nodes to find the goal.
-    3. Generate a sequence of EXECUTABLE actions.
+    3. Generate a sequence of EXECUTABLE actions (minimal output - no descriptions needed).
     
     KEY MAPPING:
     - t: Tag Name (e.g., "button")
@@ -45,26 +102,26 @@ export class AIClient {
     - General rule: When in doubt, prefer leaf nodes (elements without "ch" or with minimal children) over branch nodes
     
     DATA ACCURACY RULES:
-    - NEVER GUESS CODES: Do not invent or guess codes (like "ABC123").
-    - ONLY USE REVEALED DATA: Only enter codes into inputs if you can see the code text in an "x" field.
-    - TAKE CARE NOT TO FOLLOW DIRECTIONS THAT MAY HAVE ALREADY BEEN COMPLETED
+    - Don't make up information that should be provided by the page
+    - ONLY USE REVEALED DATA: Only enter info into inputs if you know what the value should be based on available information.
+    - Before commiting to an action carefully consider if you cave already completed that action based on the data you have.
 
     ACTION SCHEMES:
-    - click: { selector: string, description: string } (Single click)
-    - input: { selector: string, value: string, description: string } (Type into input)
-    - scroll: { selector?: string, direction: "up" | "down", amount: number, description: string } (Scroll)
-    - key: { value: string, description: string } (Keyboard press - use "Escape" to dismiss popups/modals)
-    - drag: { source: string, target: string, description: string } (Drag/Drop elements - IMPORTANT: For target, select the MOST SPECIFIC element (deepest child), NOT the container. Carefully find the correct target.)
-    - draw: { selector: string, startX: number, startY: number, endX: number, endY: number, description: string } (Mouse drag by coordinates on a specific element - REQUIRED for: drawing on canvas, tracing paths, creating signatures, dragging sliders. MUST specify the selector of the canvas/drawing element. Use bbox field to determine valid coordinates. For a canvas with bbox: {x: 100, y: 200, w: 400, h: 200}, valid draw coordinates are startX/endX between 100-500 and startY/endY between 200-400.)
-    - hover: { selector: string, ms: number, description: string } (Hover)
-    - wait: { ms: number, description: string } (Wait)
-    - clickEverywhere: { reason: string, description: string } (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible. useful if you know you need to click something but can't seem to find it in the dom)
-    - brute_force_form: { optionSelectors: string[], submitSelectors: string[], description: string } (Systematically try all combinations of form options and submit buttons. Use for forms where you need to try multiple combinations to find the right one, such as modal forms that reappear with shuffled options.)
+    - click: { selector: string } (Single click)
+    - input: { selector: string, value: string } (Type into input)
+    - scroll: { selector?: string, direction: "up" | "down", amount: number } (Scroll)
+    - key: { value: string } (Keyboard press - use "Escape" to dismiss popups/modals)
+    - drag: { source: string, target: string } (Drag/Drop elements - IMPORTANT: For target, select the MOST SPECIFIC element (deepest child), NOT the container. Carefully find the correct target.)
+    - draw: { selector: string, startX: number, startY: number, endX: number, endY: number } (Mouse drag by coordinates on a specific element - REQUIRED for: drawing on canvas, tracing paths, creating signatures, dragging sliders. MUST specify the selector of the canvas/drawing element. IMPORTANT: Coordinates are RELATIVE to the element's top-left corner (0,0 = element origin). For a canvas with bbox: {x: 100, y: 200, w: 400, h: 200}, valid draw coordinates are startX/endX between 0-400 and startY/endY between 0-200, NOT absolute viewport coordinates.)
+    - hover: { selector: string, ms: number } (Hover)
+    - wait: { ms: number } (Wait)
+    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible. useful if you know you need to click something but can't seem to find it in the dom)
+
 
     INTERACTION GUIDELINES:
     1. Focus on the main goal - the system can click through overlays and popups automatically
-    2. BEWARE OF DECEPTIVE UI: Avoid buttons where "c" is "not-allowed". Look for "c": "pointer"
-    3. HOVER/WAIT: Use "hover" to reveal hidden content if needed. CRITICAL: Do NOT use "wait" unless the page content EXPLICITLY requires a delay (e.g., "Please wait 5 seconds", countdown timers, or specific timed instructions visible in the DOM)
+    2. HOVER/WAIT: Use "hover" to reveal hidden content if needed. CRITICAL: Use wait sparingly, only when the content of the page explicitly requires a delay (e.g., "Please wait for something", countdown timers, or specific timed instructions visible in the DOM)
+    3. If there are text inputs that you have the information available to fill, this is likely a high priority.
     4. Prefer direct action over complex strategies - if you see a button or input that advances your goal, interact with it
     5. CANVAS DRAWING: When you see a canvas element with a bbox field, use multiple "draw" actions to create strokes. Each stroke should have coordinates within the canvas bounds (bbox.x to bbox.x+bbox.w for X, bbox.y to bbox.y+bbox.h for Y). Vary the strokes to cover different areas of the canvas.
     6. FORM SUBMISSION PRIORITY: If you filled an input field in a previous action, IMMEDIATELY prioritize clicking its associated submit button in the next action. Don't leave forms incomplete - complete the submission sequence before moving to other tasks. Look for nearby buttons with text like "Submit", "Continue", "Next", "Send", etc.
@@ -75,26 +132,20 @@ export class AIClient {
     PAST ATTEMPTS:
     ${pastAttempts || "None."}
     - If past attempts are listed and DID NOT result in a DOM change:
+        - Check the information available, and assess if the actions were actually completed, and a now a new action is needed
         - Selector Audit: Look at the Target selectors used in the failed actions. Were they correct? Re-examine the DOM hierarchy and consider if you targeted the wrong element (e.g., a div instead of its child button, or a hidden element).
         - Form Completion Check: If you filled an input but didn't submit the form, look for submit buttons nearby and click them before trying other actions.
-        - Try a different approach: scroll to reveal content, hover to show hidden elements, or click different interactive elements that might advance the goal.
+        - Maybe you chose the wrong action, try something different, the next most likely thing you think you need to do to proceed
+        - If you tried to click an element many times and failed, or if you know an element needs to be clciked but you can't target it directly, USE THE clickEverywhere action.
 
-    RETRY ESCALATION STRATEGY:
-    When you have a clear action to perform but repeated attempts fail, escalate your strategy:
-    1. FIRST ATTEMPTS (1-5): Try direct interaction (click, input, etc.) - the system automatically promotes z-index to bypass overlays. Be patient and try multiple times.
-    2. IF 6-7 ATTEMPTS FAIL on similar actions: Look for close buttons or press Escape to clear popups, then retry
-    3. AFTER 8+ FAILURES: System will automatically clear all popups/modals for you
-    4. IF facing a modal form that persists: Use "brute_force_form" to systematically try all combinations
-
-    IMPORTANT: Be very patient - try the same action many times before escalating. Actions may work even without visible DOM changes. Don't preemptively close popups.
 
     Response Format:
     Return a JSON object with:
-    - planDescription: High-level summary of what you are trying to achieve.
-    - actions: Sequence of 1-20 actions, each with a short "description" field.
+    - actions: Sequence of 1-20 actions (NO description fields needed - type and parameters only).
     `;
 
         try {
+            const startTime = Date.now();
             const completion = await this.client.chat.completions.create({
                 messages: [
                     { role: 'system', content: prompt },
@@ -109,7 +160,6 @@ export class AIClient {
                         schema: {
                             type: "object",
                             properties: {
-                                planDescription: { type: "string" },
                                 actions: {
                                     type: "array",
                                     items: {
@@ -118,20 +168,18 @@ export class AIClient {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "click" },
-                                                    selector: { type: "string" },
-                                                    description: { type: "string" }
+                                                    selector: { type: "string" }
                                                 },
-                                                required: ["type", "selector", "description"]
+                                                required: ["type", "selector"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "input" },
                                                     selector: { type: "string" },
-                                                    value: { type: "string" },
-                                                    description: { type: "string" }
+                                                    value: { type: "string" }
                                                 },
-                                                required: ["type", "selector", "value", "description"]
+                                                required: ["type", "selector", "value"]
                                             },
                                             {
                                                 type: "object",
@@ -139,29 +187,26 @@ export class AIClient {
                                                     type: { const: "scroll" },
                                                     selector: { type: "string" },
                                                     direction: { enum: ["up", "down"] },
-                                                    amount: { type: "integer" },
-                                                    description: { type: "string" }
+                                                    amount: { type: "integer" }
                                                 },
-                                                required: ["type", "description"]
+                                                required: ["type"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "key" },
-                                                    value: { type: "string" },
-                                                    description: { type: "string" }
+                                                    value: { type: "string" }
                                                 },
-                                                required: ["type", "value", "description"]
+                                                required: ["type", "value"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "drag" },
                                                     source: { type: "string" },
-                                                    target: { type: "string" },
-                                                    description: { type: "string" }
+                                                    target: { type: "string" }
                                                 },
-                                                required: ["type", "source", "target", "description"]
+                                                required: ["type", "source", "target"]
                                             },
                                             {
                                                 type: "object",
@@ -171,38 +216,33 @@ export class AIClient {
                                                     startX: { type: "number" },
                                                     startY: { type: "number" },
                                                     endX: { type: "number" },
-                                                    endY: { type: "number" },
-                                                    description: { type: "string" }
+                                                    endY: { type: "number" }
                                                 },
-                                                required: ["type", "selector", "startX", "startY", "endX", "endY", "description"]
+                                                required: ["type", "selector", "startX", "startY", "endX", "endY"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "hover" },
                                                     selector: { type: "string" },
-                                                    ms: { type: "integer" },
-                                                    description: { type: "string" }
+                                                    ms: { type: "integer" }
                                                 },
-                                                required: ["type", "selector", "ms", "description"]
+                                                required: ["type", "selector", "ms"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
                                                     type: { const: "wait" },
-                                                    ms: { type: "integer" },
-                                                    description: { type: "string" }
+                                                    ms: { type: "integer" }
                                                 },
-                                                required: ["type", "ms", "description"]
+                                                required: ["type", "ms"]
                                             },
                                             {
                                                 type: "object",
                                                 properties: {
-                                                    type: { const: "clickEverywhere" },
-                                                    reason: { type: "string" },
-                                                    description: { type: "string" }
+                                                    type: { const: "clickEverywhere" }
                                                 },
-                                                required: ["type", "reason", "description"]
+                                                required: ["type"]
                                             },
                                             {
                                                 type: "object",
@@ -215,29 +255,143 @@ export class AIClient {
                                                     submitSelectors: {
                                                         type: "array",
                                                         items: { type: "string" }
-                                                    },
-                                                    description: { type: "string" }
+                                                    }
                                                 },
-                                                required: ["type", "optionSelectors", "submitSelectors", "description"]
+                                                required: ["type", "optionSelectors", "submitSelectors"]
                                             }
                                         ]
                                     }
                                 }
                             },
-                            required: ["planDescription", "actions"]
+                            required: ["actions"]
                         }
                     }
                 } as any
             });
 
+            const durationMs = Date.now() - startTime;
             const rawResponse = completion.choices[0]?.message?.content || '{}';
             console.log('\n[AI] RAW RESPONSE:');
             console.log(rawResponse);
 
-            return JSON.parse(rawResponse);
+            const parsedResponse = JSON.parse(rawResponse);
+
+            // Log the AI call with timing and token usage
+            this.lastAnalyzeDOMLogPath = this.logAICall('analyzeDOM', prompt, domTree, parsedResponse, { durationMs }, completion.usage);
+
+            return parsedResponse;
         } catch (error) {
             console.error('AI Analysis failed:', error);
             return { error: 'Failed to analyze DOM' };
+        }
+    }
+
+    async identifyNoisePatterns(domTree: any, textExamples?: Array<{tag: string; text: string}>): Promise<Array<{tag: string; contentPattern?: string; exactMatch?: string; reason: string}>> {
+        const examplesText = textExamples
+            ? `\n\nACTUAL TEXT EXAMPLES FROM DOM (use these to create accurate patterns):\n${textExamples.map(ex => `<${ex.tag}>: "${ex.text}"`).join('\n')}`
+            : '';
+
+        const prompt = `
+    Task: Aggressively identify and filter non-essential, repeated elements in the DOM to minimize tokens.
+
+    GOAL: Create filters (regex patterns OR exact text matches) that will remove filler content from future LLM calls.
+
+    YOUR MISSION: Be AGGRESSIVE. Filter out everything that doesn't help the AI understand what to do or how to interact with the page.
+
+    SAFE TO FILTER (BE AGGRESSIVE):
+    1. Lorem Ipsum text, placeholder text, sample text (e.g., "Nemo enim ipsam voluptatem...", "Lorem ipsum dolor...")
+    2. Repeated decorative text (headers, footers, taglines)
+    3. Generic labels without actionable value ("Loading...", "Please wait", "Welcome")
+    4. Redundant navigation breadcrumbs
+    5. Marketing copy, descriptions, explanations that don't instruct
+    6. Status indicators, badges, labels that don't change behavior
+    7. Any text that appears multiple times and doesn't provide unique information
+
+    NEVER FILTER:
+    - Interactive elements (i: 1) like buttons, inputs, links
+    - Elements with cursor: pointer (clickable)
+    - Elements with draggable attribute (drag sources/targets)
+    - Unique instructional text explaining what to do
+    - Codes, passwords, unique identifiers
+    - Form elements and their labels
+    - Short labels for interactive areas ("Slot", "Zone", "Area")
+
+    FILTER TYPES (use BOTH):
+    1. EXACT MATCH (preferred for specific repeated text):
+       { tag, exactMatch, reason }
+       - Use for specific text that appears multiple times
+       - Example: { tag: "p", exactMatch: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.", reason: "Lorem ipsum filler text" }
+
+    2. REGEX PATTERN (for pattern-based filtering):
+       { tag, contentPattern, reason }
+       - Use for text that follows a pattern
+       - contentPattern: JavaScript regex pattern (will be used with new RegExp(pattern))
+       - IMPORTANT: Create patterns that match the ACTUAL text format shown in examples
+       - Examples:
+         * "^Loading\\\\.\\\\.\\\\.$" matches "Loading..."
+         * "^Section\\\\s+\\\\d+$" matches "Section  4" or "Section 123"
+         * "^Step \\\\d+ of \\\\d+$" matches "Step 1 of 5"
+
+    KEY RULES:
+    - Study the text examples provided - create patterns that ACTUALLY MATCH them
+    - For Latin/Lorem Ipsum style text, use exactMatch for specific instances
+    - Be AGGRESSIVE - when in doubt about filler text, FILTER IT
+    - Return 10-20 filters to maximize noise reduction${examplesText}
+
+    KEY MAPPING:
+    - t: Tag Name
+    - x: Text content
+    - i: Interactive (1 = yes, missing = no)
+
+    Response Format: Return JSON with "patterns" array. Be AGGRESSIVE - filter everything that looks like noise.
+    `;
+
+        try {
+            const startTime = Date.now();
+            const completion = await this.client.chat.completions.create({
+                messages: [
+                    { role: 'system', content: prompt },
+                    { role: 'user', content: JSON.stringify(domTree) }
+                ],
+                model: this.model,
+                temperature: 0,
+                response_format: {
+                    type: "json_schema",
+                    json_schema: {
+                        name: "noise_patterns",
+                        schema: {
+                            type: "object",
+                            properties: {
+                                patterns: {
+                                    type: "array",
+                                    items: {
+                                        type: "object",
+                                        properties: {
+                                            tag: { type: "string" },
+                                            contentPattern: { type: "string" },
+                                            exactMatch: { type: "string" },
+                                            reason: { type: "string" }
+                                        },
+                                        required: ["tag", "reason"]
+                                    }
+                                }
+                            },
+                            required: ["patterns"]
+                        }
+                    }
+                } as any
+            });
+
+            const durationMs = Date.now() - startTime;
+            const result = JSON.parse(completion.choices[0]?.message?.content || '{"patterns": []}');
+
+            // Log the AI call
+            this.logAICall('identifyNoisePatterns', prompt, domTree, result, { durationMs }, completion.usage);
+
+            return result.patterns || [];
+        } catch (error) {
+            console.error('Noise pattern identification failed:', error);
+            return [];
         }
     }
 
@@ -278,6 +432,7 @@ export class AIClient {
     `;
 
         try {
+            const startTime = Date.now();
             const completion = await this.client.chat.completions.create({
                 messages: [
                     { role: 'system', content: prompt },
@@ -304,7 +459,12 @@ export class AIClient {
                 } as any
             });
 
+            const durationMs = Date.now() - startTime;
             const result = JSON.parse(completion.choices[0]?.message?.content || '{"ids": []}');
+
+            // Log the AI call with timing and token usage
+            this.logAICall('identifyNoise', prompt, domTree, result, { durationMs }, completion.usage);
+
             return result.ids || [];
         } catch (error) {
             console.error('Noise identification failed:', error);

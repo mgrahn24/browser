@@ -3,6 +3,8 @@ import * as readline from 'readline';
 
 export interface ZIndexPromotionOptions {
     debugMode?: boolean;
+    showOverlay?: boolean;
+    waitForUser?: boolean;
 }
 
 /**
@@ -124,8 +126,12 @@ export async function withZIndexPromotion<T>(
     // Small delay to ensure browser applies z-index changes
     await page.waitForTimeout(50);
 
-    // Add visual indicators if in debug mode
-    if (options.debugMode && restore) {
+    // Determine if we should show overlay and/or wait
+    const shouldShowOverlay = options.showOverlay ?? options.debugMode ?? false;
+    const shouldWait = options.waitForUser ?? options.debugMode ?? false;
+
+    // Add visual indicators if enabled
+    if (shouldShowOverlay && restore) {
         await page.evaluate((selectors) => {
             selectors.forEach(({ selector }: any) => {
                 const el = document.querySelector(selector) as HTMLElement;
@@ -136,26 +142,30 @@ export async function withZIndexPromotion<T>(
             });
         }, restore);
 
-        // Wait for user to press Enter
-        console.log('\n⏸️  [DEBUG] Z-index promoted. Press ENTER to continue...\n');
-        await waitForEnter();
-
-        // Remove visual indicators
-        await page.evaluate((selectors) => {
-            selectors.forEach(({ selector }: any) => {
-                const el = document.querySelector(selector) as HTMLElement;
-                if (el) {
-                    el.style.outline = '';
-                    el.style.outlineOffset = '';
-                }
-            });
-        }, restore);
+        // Wait for user to press Enter (only if enabled)
+        if (shouldWait) {
+            console.log('\n⏸️  [DEBUG] Z-index promoted. Press ENTER to continue...\n');
+            await waitForEnter();
+        }
     }
 
     try {
         // Perform the action with element promoted
         return await action();
     } finally {
+        // Remove visual indicators if they were added
+        if (shouldShowOverlay && restore) {
+            await page.evaluate((selectors) => {
+                selectors.forEach(({ selector }: any) => {
+                    const el = document.querySelector(selector) as HTMLElement;
+                    if (el) {
+                        el.style.outline = '';
+                        el.style.outlineOffset = '';
+                    }
+                });
+            }, restore);
+        }
+
         // Restore original styles
         if (restore) {
             await page.evaluate((styleData) => {

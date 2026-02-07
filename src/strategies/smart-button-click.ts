@@ -92,7 +92,7 @@ export class SmartButtonClickStrategy implements Strategy {
                 await withZIndexPromotion(page, selector, async () => {
                     // We use a very short timeout since this is a brute-force sweep
                     await page.click(selector, { timeout: 200, force: true });
-                }, { debugMode: this.debugMode });
+                }, { showOverlay: this.debugMode, waitForUser: false });
                 clickCount++;
                 console.log(`  ✅ Clicked [Z:${el.zIndex}] [${el.cursor}] <${el.tag}> "${el.text}"`);
 
