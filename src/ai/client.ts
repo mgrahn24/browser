@@ -10,8 +10,9 @@ export class AIClient {
     private model = 'openai/gpt-oss-120b'; // Fast, good at JSON
     private callCounter = 0;
     private lastAnalyzeDOMLogPath: string | null = null;
+    private logAICalls: boolean;
 
-    constructor() {
+    constructor(logAICalls: boolean = false) {
         if (!process.env.GROQ_API_KEY) {
             console.warn('⚠️ GROQ_API_KEY not found in .env');
         }
@@ -19,14 +20,22 @@ export class AIClient {
             apiKey: process.env.GROQ_API_KEY
         });
 
-        // Ensure logs directory exists
-        const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
-        if (!fs.existsSync(logsDir)) {
-            fs.mkdirSync(logsDir, { recursive: true });
+        this.logAICalls = logAICalls;
+
+        // Ensure logs directory exists only if logging is enabled
+        if (this.logAICalls) {
+            const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
+            if (!fs.existsSync(logsDir)) {
+                fs.mkdirSync(logsDir, { recursive: true });
+            }
         }
     }
 
     private logAICall(type: string, prompt: string, input: any, response: any, timing: { durationMs: number }, tokenUsage?: any): string | null {
+        if (!this.logAICalls) {
+            return null;
+        }
+
         try {
             this.callCounter++;
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -97,7 +106,6 @@ export class AIClient {
     ELEMENT SELECTION SPECIFICITY:
     - ALWAYS prefer the MOST SPECIFIC element (deepest in hierarchy) over containers
     - If a parent element has "ch" (children), and one child is the actual target, select the CHILD not the parent
-    - Example: Container with text "Available slots" has children "Slot 1", "Slot 2" → select specific slot, not container
     - For drag targets: If you see a container holding multiple slots/zones, target the specific empty slot element
     - General rule: When in doubt, prefer leaf nodes (elements without "ch" or with minimal children) over branch nodes
     
@@ -110,38 +118,38 @@ export class AIClient {
     - click: { selector: string } (Single click)
     - input: { selector: string, value: string } (Type into input)
     - scroll: { selector?: string, direction: "up" | "down", amount: number } (Scroll)
-    - key: { value: string } (Keyboard press - use "Escape" to dismiss popups/modals)
+    - key: { value: string } (Keyboard press)
     - drag: { source: string, target: string } (Drag/Drop elements - IMPORTANT: For target, select the MOST SPECIFIC element (deepest child), NOT the container. Carefully find the correct target.)
     - draw: { selector: string, startX: number, startY: number, endX: number, endY: number } (Mouse drag by coordinates on a specific element - REQUIRED for: drawing on canvas, tracing paths, creating signatures, dragging sliders. MUST specify the selector of the canvas/drawing element. IMPORTANT: Coordinates are RELATIVE to the element's top-left corner (0,0 = element origin). For a canvas with bbox: {x: 100, y: 200, w: 400, h: 200}, valid draw coordinates are startX/endX between 0-400 and startY/endY between 0-200, NOT absolute viewport coordinates.)
     - hover: { selector: string, ms: number } (Hover)
     - wait: { ms: number } (Wait)
-    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible. useful if you know you need to click something but can't seem to find it in the dom)
+    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible, such as when the element isn't in the DOM or you suspect there is a shadow DOM. useful if you know you need to click something but can't seem to find it in the dom)
 
 
     INTERACTION GUIDELINES:
     1. Focus on the main goal - the system can click through overlays and popups automatically
-    2. HOVER/WAIT: Use "hover" to reveal hidden content if needed. CRITICAL: Use wait sparingly, only when the content of the page explicitly requires a delay (e.g., "Please wait for something", countdown timers, or specific timed instructions visible in the DOM)
+    2. Use wait sparingly, only when the content of the page explicitly requires a delay (e.g., "Please wait for something", countdown timers, or specific timed instructions visible in the DOM)
     3. If there are text inputs that you have the information available to fill, this is likely a high priority.
     4. Prefer direct action over complex strategies - if you see a button or input that advances your goal, interact with it
-    5. CANVAS DRAWING: When you see a canvas element with a bbox field, use multiple "draw" actions to create strokes. Each stroke should have coordinates within the canvas bounds (bbox.x to bbox.x+bbox.w for X, bbox.y to bbox.y+bbox.h for Y). Vary the strokes to cover different areas of the canvas.
-    6. FORM SUBMISSION PRIORITY: If you filled an input field in a previous action, IMMEDIATELY prioritize clicking its associated submit button in the next action. Don't leave forms incomplete - complete the submission sequence before moving to other tasks. Look for nearby buttons with text like "Submit", "Continue", "Next", "Send", etc.
+    5. FORM SUBMISSION PRIORITY: If you filled an input field in a previous action, IMMEDIATELY prioritize clicking its associated submit button in the next action. Don't leave forms incomplete - complete the submission sequence before moving to other tasks. Look for nearby buttons with text like "Submit", "Continue", "Next", "Send", etc.
 
-    - Use "drag": When moving UI elements (dragging a card to a drop zone, reordering list items, drag-and-drop interactions)
-    - Use "draw": When the task requires mouse movement itself (drawing on canvas, creating signatures, tracing shapes, painting, sketching, moving sliders precisely, any instruction to "draw", "trace", "paint", or "sketch")
+    - Use "drag": When moving UI elements (dragging something to a drop zone, reordering list items, drag-and-drop interactions)
+    - Use "draw": When the task requires mouse movement itself (drawing on canvas, creating signatures, tracing shapes, painting, moving sliders precisely)
     
     PAST ATTEMPTS:
     ${pastAttempts || "None."}
     - If past attempts are listed and DID NOT result in a DOM change:
+        - If you have tried to click something multiple times but have failed to cause a change, FIrst close or complete all things that might be blocking, like popups or modals, then USE THE clickEverywhere ACTION to try to click around the page and unstick the situation 
         - Check the information available, and assess if the actions were actually completed, and a now a new action is needed
         - Selector Audit: Look at the Target selectors used in the failed actions. Were they correct? Re-examine the DOM hierarchy and consider if you targeted the wrong element (e.g., a div instead of its child button, or a hidden element).
         - Form Completion Check: If you filled an input but didn't submit the form, look for submit buttons nearby and click them before trying other actions.
         - Maybe you chose the wrong action, try something different, the next most likely thing you think you need to do to proceed
         - If you tried to click an element many times and failed, or if you know an element needs to be clciked but you can't target it directly, USE THE clickEverywhere action.
-
+        
 
     Response Format:
     Return a JSON object with:
-    - actions: Sequence of 1-20 actions (NO description fields needed - type and parameters only).
+    - actions: Sequence of 1-20 actions
     `;
 
         try {
@@ -276,8 +284,16 @@ export class AIClient {
 
             const parsedResponse = JSON.parse(rawResponse);
 
-            // Log the AI call with timing and token usage
-            this.lastAnalyzeDOMLogPath = this.logAICall('analyzeDOM', prompt, domTree, parsedResponse, { durationMs }, completion.usage);
+            // Log the AI call with timing, token usage, and raw response
+            // Pass the raw response as well for complete logging
+            this.lastAnalyzeDOMLogPath = this.logAICall(
+                'analyzeDOM',
+                prompt,
+                domTree,
+                { parsed: parsedResponse, raw: rawResponse },
+                { durationMs },
+                completion.usage
+            );
 
             return parsedResponse;
         } catch (error) {
@@ -383,10 +399,18 @@ export class AIClient {
             });
 
             const durationMs = Date.now() - startTime;
-            const result = JSON.parse(completion.choices[0]?.message?.content || '{"patterns": []}');
+            const rawResponse = completion.choices[0]?.message?.content || '{"patterns": []}';
+            const result = JSON.parse(rawResponse);
 
-            // Log the AI call
-            this.logAICall('identifyNoisePatterns', prompt, domTree, result, { durationMs }, completion.usage);
+            // Log the AI call with raw response
+            this.logAICall(
+                'identifyNoisePatterns',
+                prompt,
+                domTree,
+                { parsed: result, raw: rawResponse },
+                { durationMs },
+                completion.usage
+            );
 
             return result.patterns || [];
         } catch (error) {
@@ -460,10 +484,18 @@ export class AIClient {
             });
 
             const durationMs = Date.now() - startTime;
-            const result = JSON.parse(completion.choices[0]?.message?.content || '{"ids": []}');
+            const rawResponse = completion.choices[0]?.message?.content || '{"ids": []}';
+            const result = JSON.parse(rawResponse);
 
-            // Log the AI call with timing and token usage
-            this.logAICall('identifyNoise', prompt, domTree, result, { durationMs }, completion.usage);
+            // Log the AI call with timing, token usage, and raw response
+            this.logAICall(
+                'identifyNoise',
+                prompt,
+                domTree,
+                { parsed: result, raw: rawResponse },
+                { durationMs },
+                completion.usage
+            );
 
             return result.ids || [];
         } catch (error) {

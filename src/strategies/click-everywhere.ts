@@ -21,9 +21,9 @@ export class ClickEverywhereStrategy implements Strategy {
         const start = Date.now();
         const viewport = page.viewportSize() || { width: 1280, height: 720 };
 
-        const gridSize = 32; // Fixed 32x32 grid (1024 click points)
+        const gridSize = 50; // Fixed 50x50 grid 
         const direction = this.directions[this.directionIndex];
-        console.log(`[ClickEverywhere] 32x32 grid (${gridSize * gridSize} points) - Direction: ${direction}...`);
+        console.log(`[ClickEverywhere] 50x50 grid (${gridSize * gridSize} points) - Direction: ${direction}...`);
 
         const clickCount = await this.clickGrid(page, viewport, gridSize, direction, stopSignal);
 
@@ -33,7 +33,7 @@ export class ClickEverywhereStrategy implements Strategy {
         const timeMs = Date.now() - start;
         return {
             success: true,
-            message: `32x32 [${direction}]: ${clickCount} clicks in ${timeMs}ms`,
+            message: `50x50 [${direction}]: ${clickCount} clicks in ${timeMs}ms`,
             timeMs,
         };
     }

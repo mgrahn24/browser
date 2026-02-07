@@ -27,13 +27,14 @@ export class AIRelevanceStrategy implements Strategy {
     private usePatternFiltering: boolean;
     private autoMode: boolean = false;
 
-    constructor(actionTimeout: number = 200, debugMode: boolean = false, usePatternFiltering: boolean = true) {
+    constructor(actionTimeout: number = 200, debugMode: boolean = false, usePatternFiltering: boolean = true, logAICalls: boolean = false) {
         this.hierarchyStrategy = new HierarchyScanStrategy();
-        this.ai = new AIClient();
+        this.ai = new AIClient(logAICalls);
         this.actionTimeout = actionTimeout;
         this.debugMode = debugMode;
         this.usePatternFiltering = usePatternFiltering;
         console.log(`[AI] Pattern filtering: ${usePatternFiltering ? 'ENABLED' : 'DISABLED'}`);
+        console.log(`[AI] Call logging: ${logAICalls ? 'ENABLED' : 'DISABLED'}`);
     }
 
     setDebugMode(enabled: boolean): void {
@@ -277,8 +278,26 @@ export class AIRelevanceStrategy implements Strategy {
                 }
             }
         }
-        console.log('[AI] Requesting analysis...');
-        const analysis = await this.ai.analyzeDOM(tree, pastAttemptsContext);
+        // AUTOMATIC ESCALATION: Directly trigger clickEverywhere if too many clicks have failed
+        const clickActionCount = this.pastAttempts.filter(attempt => attempt.includes('[CLICK]')).length;
+        let analysis: any;
+
+        if (clickActionCount >= 6) {
+            console.log(`\n🚨🚨🚨 AUTOMATIC ESCALATION TRIGGERED 🚨🚨🚨`);
+            console.log(`   📊 ${clickActionCount} failed CLICK actions detected`);
+            console.log(`   🔥 Bypassing AI - directly executing clickEverywhere strategy\n`);
+
+            // Directly return clickEverywhere action without calling AI
+            analysis = {
+                planDescription: `AUTOMATIC ESCALATION: ${clickActionCount} clicks failed - triggering clickEverywhere grid`,
+                actions: [
+                    { type: 'clickEverywhere', description: 'Emergency grid click to unstick (50x50 = 2500 clicks)' }
+                ]
+            };
+        } else {
+            console.log('[AI] Requesting analysis...');
+            analysis = await this.ai.analyzeDOM(tree, pastAttemptsContext);
+        }
 
         // Periodic Noise Reduction - runs every 2 rounds to filter out filler content
         this.roundsSinceNoiseClean++;
@@ -431,8 +450,9 @@ export class AIRelevanceStrategy implements Strategy {
                         await withZIndexPromotion(page, sourceSelector, async () => {
                             // Promote target element as well
                             await withZIndexPromotion(page, targetSelector, async () => {
-                                // Longer delay for drag actions to ensure z-index promotion takes full effect
-                                await page.waitForTimeout(500);
+                                // Extended delay for drag actions to ensure z-index promotion fully takes effect
+                                // This prevents the first drag from failing due to incomplete promotion
+                                await page.waitForTimeout(1000);
                                 const source = await page.locator(sourceSelector).boundingBox();
                                 const target = await page.locator(targetSelector).boundingBox();
                                 if (source && target) {

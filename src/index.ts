@@ -17,6 +17,9 @@ export class Runner {
     private running = true;
     private isPaused = false;
     private autoMode: boolean; // Mutable auto mode that can be toggled
+    private rawModeGuardInterval?: NodeJS.Timeout;
+    private pauseStartTime?: number;
+    private totalPausedTime = 0;
 
     constructor(config: Partial<RunnerConfig> & { targetUrl: string }) {
         this.config = {
@@ -55,16 +58,30 @@ export class Runner {
 
         // Setup keyboard listeners
         if (process.stdin.isTTY) {
+            process.stdin.setEncoding('utf8');
             process.stdin.setRawMode(true);
             process.stdin.resume();
-            process.stdin.on('data', (data) => {
+
+            // Use a named function so we can reference it
+            const keyHandler = (data: Buffer) => {
                 const key = data.toString();
                 if (key.toLowerCase() === 'p') {
                     this.isPaused = !this.isPaused;
                     if (this.isPaused) {
+                        // Record when pause started
+                        this.pauseStartTime = Date.now();
                         console.log('\n⏸️  PAUSED. Press [P] to resume...');
                     } else {
+                        // Calculate pause duration and add to total
+                        if (this.pauseStartTime !== undefined) {
+                            this.totalPausedTime += Date.now() - this.pauseStartTime;
+                            this.pauseStartTime = undefined;
+                        }
                         console.log('\n▶️  RESUMING...');
+                    }
+                    // Ensure raw mode stays enabled after pause toggle
+                    if (process.stdin.isTTY && !process.stdin.isRaw) {
+                        process.stdin.setRawMode(true);
                     }
                 } else if (key.toLowerCase() === 'm') {
                     this.autoMode = !this.autoMode;
@@ -81,11 +98,26 @@ export class Runner {
 
                     const mode = this.autoMode ? 'AUTO (Continuous AI execution)' : 'MANUAL (Step-by-step with debug pauses)';
                     console.log(`\n🔄 MODE SWITCHED: ${mode}`);
+
+                    // Ensure raw mode stays enabled after mode switch
+                    if (process.stdin.isTTY && !process.stdin.isRaw) {
+                        process.stdin.setRawMode(true);
+                    }
                 } else if (key === '\u0003') { // Ctrl+C
                     console.log('\n\nStopping...');
                     process.exit(0);
                 }
-            });
+            };
+
+            process.stdin.on('data', keyHandler);
+
+            // Periodic raw mode restoration (every 2 seconds) to handle any disruptions
+            this.rawModeGuardInterval = setInterval(() => {
+                if (process.stdin.isTTY && !process.stdin.isRaw) {
+                    console.log('⚠️ [System] Restoring raw mode for keyboard input...');
+                    process.stdin.setRawMode(true);
+                }
+            }, 2000);
         }
 
         process.on('SIGINT', () => {
@@ -101,12 +133,18 @@ export class Runner {
             let round = 1;
 
             while (this.running) {
+                // Ensure raw mode stays enabled (in case readline disrupted it)
+                if (process.stdin.isTTY && !process.stdin.isRaw) {
+                    process.stdin.setRawMode(true);
+                }
+
                 if (this.isPaused) {
                     await new Promise(resolve => setTimeout(resolve, 500));
                     continue;
                 }
 
-                const elapsedTotal = Math.floor((Date.now() - startRunTime) / 1000);
+                // Calculate elapsed time excluding paused time
+                const elapsedTotal = Math.floor((Date.now() - startRunTime - this.totalPausedTime) / 1000);
                 console.log(`\n=== Round ${round} (Elapsed: ${elapsedTotal}s) ===`);
 
                 let strategy: Strategy;
@@ -146,6 +184,10 @@ export class Runner {
         } catch (error) {
             console.error('Error:', error);
         } finally {
+            // Clean up raw mode guard interval
+            if (this.rawModeGuardInterval) {
+                clearInterval(this.rawModeGuardInterval);
+            }
             await this.browser.close();
         }
     }
@@ -167,6 +209,7 @@ async function main() {
     let headless = true;
     let auto = false;
     let usePatternFiltering = true;
+    let logAICalls = false;
 
     for (let i = 0; i < args.length; i++) {
         if (args[i] === '-u' || args[i] === '--url') {
@@ -179,11 +222,13 @@ async function main() {
             auto = true;
         } else if (args[i] === '--no-filter') {
             usePatternFiltering = false;
+        } else if (args[i] === '--log-ai-calls') {
+            logAICalls = true;
         }
     }
 
     if (!url) {
-        console.log('Usage: npm start -- -u <url> [--no-headless] [--auto] [--no-filter]');
+        console.log('Usage: npm start -- -u <url> [--no-headless] [--auto] [--no-filter] [--log-ai-calls]');
         process.exit(1);
     }
 
@@ -196,7 +241,7 @@ async function main() {
         headless,
         auto,
         strategies: [
-            new AIRelevanceStrategy(200, debugMode, usePatternFiltering)
+            new AIRelevanceStrategy(200, debugMode, usePatternFiltering, logAICalls)
         ],
     });
 

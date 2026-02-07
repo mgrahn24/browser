@@ -12,6 +12,14 @@ export interface ZIndexPromotionOptions {
  */
 async function waitForEnter(): Promise<void> {
     return new Promise((resolve) => {
+        // Save current raw mode state
+        const wasRaw = process.stdin.isRaw;
+
+        // Temporarily disable raw mode for readline
+        if (wasRaw) {
+            process.stdin.setRawMode(false);
+        }
+
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
@@ -19,6 +27,12 @@ async function waitForEnter(): Promise<void> {
 
         rl.question('', () => {
             rl.close();
+
+            // Restore raw mode if it was enabled
+            if (wasRaw && process.stdin.isTTY) {
+                process.stdin.setRawMode(true);
+            }
+
             resolve();
         });
     });
