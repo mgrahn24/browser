@@ -208,10 +208,10 @@ export class Runner {
 async function main() {
     const args = process.argv.slice(2);
 
-    let url = '';
-    let headless = true;
-    let auto = false;
-    let usePatternFiltering = true;
+    let url = 'https://serene-frangipane-7fd25b.netlify.app/';
+    let headless = false;
+    let auto = true;
+    let usePatternFiltering = false;
     let logAICalls = false;
 
     for (let i = 0; i < args.length; i++) {
@@ -231,7 +231,7 @@ async function main() {
     }
 
     if (!url) {
-        console.log('Usage: npm start -- -u <url> [--no-headless] [--auto] [--no-filter] [--log-ai-calls]');
+        console.log('Usage: npm start -- [-u <url>] [--headless] [--no-headless] [--auto] [--no-filter] [--log-ai-calls]');
         process.exit(1);
     }
 

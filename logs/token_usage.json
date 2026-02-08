@@ -1,0 +1,16 @@
+{
+  "totalInputTokens": 51639,
+  "totalOutputTokens": 3379,
+  "totalTokens": 55018,
+  "totalCalls": 8,
+  "cost": {
+    "input": "$0.0077",
+    "output": "$0.0020",
+    "total": "$0.0098"
+  },
+  "rates": {
+    "inputPerMillion": "$0.15",
+    "outputPerMillion": "$0.6"
+  },
+  "lastUpdated": "2026-02-08T19:14:14.840Z"
+}
