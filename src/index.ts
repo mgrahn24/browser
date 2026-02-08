@@ -145,7 +145,10 @@ export class Runner {
 
                 // Calculate elapsed time excluding paused time
                 const elapsedTotal = Math.floor((Date.now() - startRunTime - this.totalPausedTime) / 1000);
-                console.log(`\n=== Round ${round} (Elapsed: ${elapsedTotal}s) ===`);
+                const aiStrategy = this.config.strategies.find(s => s.name === 'ai-relevance') as AIRelevanceStrategy | undefined;
+                const usage = aiStrategy?.getTokenUsageSummary();
+                const usageStr = usage ? ` | Tokens: ${usage.totalTokens} (${usage.totalInputTokens} in / ${usage.totalOutputTokens} out) | Cost: ${usage.cost}` : '';
+                console.log(`\n=== Round ${round} (Elapsed: ${elapsedTotal}s${usageStr}) ===`);
 
                 let strategy: Strategy;
 

@@ -45,6 +45,10 @@ export class AIRelevanceStrategy implements Strategy {
         this.autoMode = enabled;
     }
 
+    getTokenUsageSummary() {
+        return this.ai.getTokenUsageSummary();
+    }
+
     async execute(page: Page): Promise<StrategyResult> {
         const start = Date.now();
         this.roundCounter++; // Increment round counter
@@ -142,8 +146,8 @@ export class AIRelevanceStrategy implements Strategy {
             console.error('[AI] Failed to write log files:', err);
         }
 
-        // Pattern-based noise reduction (run only on first round when arriving at new page)
-        if (this.usePatternFiltering && this.roundCounter === 1) {
+        // Pattern-based noise reduction (first on round 3, then every 20 rounds)
+        if (this.usePatternFiltering && (this.roundCounter === 3 || (this.roundCounter > 3 && (this.roundCounter - 3) % 20 === 0))) {
             console.log(`[AI] Round ${this.roundCounter}: Identifying noise patterns to reduce token usage...`);
 
             // Extract text examples to help AI create accurate patterns
@@ -250,21 +254,21 @@ export class AIRelevanceStrategy implements Strategy {
                 const failureAnalysis = this.analyzeFailurePatterns(this.pastAttempts);
                 pastAttemptsContext = this.pastAttempts.join('\n');
 
-                if (failureAnalysis.hasRepeatedFailures) {
-                    console.log(`   ⚠️ REPEATED FAILURES: ${failureAnalysis.repeatedCount} similar attempts detected`);
+                // if (failureAnalysis.hasRepeatedFailures) {
+                //     console.log(`   ⚠️ REPEATED FAILURES: ${failureAnalysis.repeatedCount} similar attempts detected`);
 
-                    // Give escalation hints when we have 6+ failures (automatic escalation at 8)
-                    if (failureAnalysis.repeatedCount >= 6) {
-                        const escalationHint = `\n\n⚠️ REPEATED FAILURE DETECTED: ${failureAnalysis.repeatedCount} similar attempts have failed.` +
-                            (failureAnalysis.repeatedCount >= 8
-                                ? ` System will automatically clear popups next iteration. Consider:\n`
-                                : ` Consider escalating:\n`) +
-                            `- If overlays/popups might be blocking: Look for close buttons (×, "Close", etc.) to click, or press "Escape" key to dismiss them, then retry your action\n` +
-                            `- If it's a modal form that reappears: Use "brute_force_form" action\n` +
-                            `- Otherwise: Try a completely different approach`;
-                        pastAttemptsContext += escalationHint;
-                    }
-                }
+                //     // Give escalation hints when we have 6+ failures (automatic escalation at 8)
+                //     if (failureAnalysis.repeatedCount >= 6) {
+                //         const escalationHint = `\n\n⚠️ REPEATED FAILURE DETECTED: ${failureAnalysis.repeatedCount} similar attempts have failed.` +
+                //             (failureAnalysis.repeatedCount >= 8
+                //                 ? ` System will automatically clear popups next iteration. Consider:\n`
+                //                 : ` Consider escalating:\n`) +
+                //             `- If overlays/popups might be blocking: Look for close buttons (×, "Close", etc.) to click, or press "Escape" key to dismiss them, then retry your action\n` +
+                //             `- If it's a modal form that reappears: Use "brute_force_form" action\n` +
+                //             `- Otherwise: Try a completely different approach`;
+                //         pastAttemptsContext += escalationHint;
+                //     }
+                // }
             }
 
             // Include last detected changes as feedback

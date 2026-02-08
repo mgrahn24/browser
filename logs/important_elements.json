@@ -13,7 +13,7 @@
     "id": "ai-8",
     "layerZ": 10000,
     "position": "fixed",
-    "text": "Step  30  of  30  - Browser Navigation Challenge"
+    "text": "Step  16  of  30  - Browser Navigation Challenge"
   },
   {
     "tag": "div",
@@ -25,197 +25,189 @@
     "tag": "h1",
     "id": "ai-10",
     "layerZ": 100,
-    "text": "Challenge Step  30"
+    "text": "Challenge Step  16"
   },
   {
     "tag": "p",
     "id": "ai-11",
     "layerZ": 100,
-    "text": "You are on step  30 . Complete the challenges and enter the code to proceed."
+    "text": "You are on step  16 . Complete the challenges and enter the code to proceed."
   },
   {
     "tag": "div",
-    "id": "ai-5344",
+    "id": "ai-2034",
     "layerZ": 100,
     "position": "relative"
   },
   {
     "tag": "p",
-    "id": "ai-5345",
+    "id": "ai-2035",
     "layerZ": 100,
-    "text": "Register a service worker, wait for the cache to be populated, then retrieve the code."
+    "text": "Draw a  square  on the canvas below, then click complete."
   },
   {
     "tag": "strong",
-    "id": "ai-5346",
+    "id": "ai-2036",
     "layerZ": 100,
-    "text": "Service Worker Challenge:"
+    "text": "Gesture Challenge:"
   },
   {
     "tag": "div",
-    "id": "ai-5348",
+    "id": "ai-2037",
     "layerZ": 100
   },
   {
+    "tag": "canvas",
+    "id": "ai-2038",
+    "layerZ": 100,
+    "cursor": "crosshair",
+    "boundingBox": {
+      "x": 140,
+      "y": -713,
+      "w": 402,
+      "h": 302
+    }
+  },
+  {
     "tag": "div",
-    "id": "ai-5349",
+    "id": "ai-2039",
     "layerZ": 100
   },
   {
     "tag": "button",
-    "id": "ai-5350",
-    "interactive": 1,
-    "layerZ": 100,
-    "cursor": "default",
-    "text": "Registered ✓"
-  },
-  {
-    "tag": "span",
-    "id": "ai-5351",
-    "layerZ": 100,
-    "text": "● Registered"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5352",
-    "layerZ": 100
-  },
-  {
-    "tag": "span",
-    "id": "ai-5353",
-    "layerZ": 100,
-    "text": "Cache status:"
-  },
-  {
-    "tag": "span",
-    "id": "ai-5354",
-    "layerZ": 100,
-    "text": "● Cached"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5355",
+    "id": "ai-2040",
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
-    "text": "2. Retrieve from Cache"
+    "text": "Clear"
+  },
+  {
+    "tag": "span",
+    "id": "ai-2041",
+    "layerZ": 100,
+    "text": "Attempts:  0"
+  },
+  {
+    "tag": "button",
+    "id": "ai-2042",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "default",
+    "text": "Draw something first"
+  },
+  {
+    "tag": "button",
+    "id": "ai-16",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Advance"
   },
   {
     "tag": "button",
     "id": "ai-17",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Continue"
+    "text": "Go Forward"
   },
   {
     "tag": "button",
     "id": "ai-18",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Next Step"
+    "text": "Proceed Forward"
   },
   {
     "tag": "button",
     "id": "ai-19",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Continue"
+    "text": "Proceed Forward"
   },
   {
     "tag": "button",
     "id": "ai-20",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Proceed"
+    "text": "Continue Reading"
   },
   {
     "tag": "button",
     "id": "ai-21",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Advance"
-  },
-  {
-    "tag": "button",
-    "id": "ai-22",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Advance"
-  },
-  {
-    "tag": "button",
-    "id": "ai-23",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Advance"
-  },
-  {
-    "tag": "button",
-    "id": "ai-24",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Move On"
-  },
-  {
-    "tag": "button",
-    "id": "ai-25",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Next Section"
-  },
-  {
-    "tag": "button",
-    "id": "ai-26",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
     "text": "Click Here"
   },
   {
     "tag": "button",
+    "id": "ai-22",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Next Page"
+  },
+  {
+    "tag": "button",
+    "id": "ai-23",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Continue Reading"
+  },
+  {
+    "tag": "button",
+    "id": "ai-24",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Continue"
+  },
+  {
+    "tag": "button",
+    "id": "ai-25",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Proceed"
+  },
+  {
+    "tag": "button",
+    "id": "ai-26",
+    "interactive": 1,
+    "layerZ": 100,
+    "position": "absolute",
+    "cursor": "pointer",
+    "text": "Next Step"
+  },
+  {
+    "tag": "button",
     "id": "ai-27",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Continue Journey"
+    "text": "Next Section"
   },
   {
     "tag": "button",
     "id": "ai-28",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
     "text": "Continue Journey"
@@ -225,133 +217,1759 @@
     "id": "ai-29",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
-    "text": "Next Section"
+    "text": "Move On"
   },
   {
     "tag": "button",
     "id": "ai-30",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Next Step"
-  },
-  {
-    "tag": "button",
-    "id": "ai-31",
-    "interactive": 1,
-    "layerZ": 100,
-    "visibility": 0,
     "position": "absolute",
     "cursor": "pointer",
     "text": "Next"
   },
   {
     "tag": "div",
-    "id": "ai-5357",
-    "layerZ": 100,
-    "position": "absolute"
+    "id": "ai-31",
+    "layerZ": 100
   },
   {
-    "tag": "h3",
-    "id": "ai-5358",
+    "tag": "h2",
+    "id": "ai-32",
     "layerZ": 100,
-    "text": "Content Block  1  Loaded!"
-  },
-  {
-    "tag": "p",
-    "id": "ai-5359",
-    "layerZ": 100,
-    "text": "This content appeared  500 ms after page load."
+    "text": "Scroll Down to Find Navigation"
   },
   {
     "tag": "div",
-    "id": "ai-5360",
-    "layerZ": 100,
-    "position": "absolute"
+    "id": "ai-33",
+    "layerZ": 100
   },
   {
     "tag": "h3",
-    "id": "ai-5361",
+    "id": "ai-34",
     "layerZ": 100,
-    "text": "Content Block  2  Loaded!"
+    "text": "Section  1"
   },
   {
     "tag": "p",
-    "id": "ai-5362",
+    "id": "ai-35",
     "layerZ": 100,
-    "text": "This content appeared  1500 ms after page load."
+    "text": "This is filler content. Keep scrolling to find the navigation button."
   },
   {
     "tag": "div",
-    "id": "ai-5363",
-    "layerZ": 100,
-    "position": "absolute"
+    "id": "ai-36",
+    "layerZ": 100
   },
   {
     "tag": "h3",
-    "id": "ai-5364",
+    "id": "ai-37",
     "layerZ": 100,
-    "text": "Content Block  3  Loaded!"
+    "text": "Section  2"
   },
   {
     "tag": "p",
-    "id": "ai-5365",
+    "id": "ai-38",
     "layerZ": 100,
-    "text": "This content appeared  2500 ms after page load."
+    "text": "This is filler content. Keep scrolling to find the navigation button."
   },
   {
     "tag": "div",
-    "id": "ai-5366",
-    "layerZ": 100,
-    "position": "absolute"
+    "id": "ai-39",
+    "layerZ": 100
   },
   {
     "tag": "h3",
-    "id": "ai-5367",
+    "id": "ai-40",
     "layerZ": 100,
-    "text": "Content Block  4  Loaded!"
+    "text": "Section  3"
   },
   {
     "tag": "p",
-    "id": "ai-5368",
+    "id": "ai-41",
     "layerZ": 100,
-    "text": "This content appeared  3500 ms after page load."
+    "text": "This is filler content. Keep scrolling to find the navigation button."
   },
   {
     "tag": "div",
-    "id": "ai-337",
+    "id": "ai-42",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-43",
+    "layerZ": 100,
+    "text": "Section  4"
+  },
+  {
+    "tag": "p",
+    "id": "ai-44",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-45",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-46",
+    "layerZ": 100,
+    "text": "Section  5"
+  },
+  {
+    "tag": "p",
+    "id": "ai-47",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-48",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-49",
+    "layerZ": 100,
+    "text": "Section  6"
+  },
+  {
+    "tag": "p",
+    "id": "ai-50",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-51",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-52",
+    "layerZ": 100,
+    "text": "Section  7"
+  },
+  {
+    "tag": "p",
+    "id": "ai-53",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-54",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-55",
+    "layerZ": 100,
+    "text": "Section  8"
+  },
+  {
+    "tag": "p",
+    "id": "ai-56",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-57",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-58",
+    "layerZ": 100,
+    "text": "Section  9"
+  },
+  {
+    "tag": "p",
+    "id": "ai-59",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-60",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-61",
+    "layerZ": 100,
+    "text": "Section  10"
+  },
+  {
+    "tag": "p",
+    "id": "ai-62",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-63",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-64",
+    "layerZ": 100,
+    "text": "Section  11"
+  },
+  {
+    "tag": "p",
+    "id": "ai-65",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-66",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-67",
+    "layerZ": 100,
+    "text": "Section  12"
+  },
+  {
+    "tag": "p",
+    "id": "ai-68",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-69",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-70",
+    "layerZ": 100,
+    "text": "Section  13"
+  },
+  {
+    "tag": "p",
+    "id": "ai-71",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-72",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-73",
+    "layerZ": 100,
+    "text": "Section  14"
+  },
+  {
+    "tag": "p",
+    "id": "ai-74",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-75",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-76",
+    "layerZ": 100,
+    "text": "Section  15"
+  },
+  {
+    "tag": "p",
+    "id": "ai-77",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-78",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-79",
+    "layerZ": 100,
+    "text": "Section  16"
+  },
+  {
+    "tag": "p",
+    "id": "ai-80",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-81",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-82",
+    "layerZ": 100,
+    "text": "Section  17"
+  },
+  {
+    "tag": "p",
+    "id": "ai-83",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-84",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-85",
+    "layerZ": 100,
+    "text": "Section  18"
+  },
+  {
+    "tag": "p",
+    "id": "ai-86",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-87",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-88",
+    "layerZ": 100,
+    "text": "Section  19"
+  },
+  {
+    "tag": "p",
+    "id": "ai-89",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-90",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-91",
+    "layerZ": 100,
+    "text": "Section  20"
+  },
+  {
+    "tag": "p",
+    "id": "ai-92",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-93",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-94",
+    "layerZ": 100,
+    "text": "Section  21"
+  },
+  {
+    "tag": "p",
+    "id": "ai-95",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-96",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-97",
+    "layerZ": 100,
+    "text": "Section  22"
+  },
+  {
+    "tag": "p",
+    "id": "ai-98",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-99",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-100",
+    "layerZ": 100,
+    "text": "Section  23"
+  },
+  {
+    "tag": "p",
+    "id": "ai-101",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-102",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-103",
+    "layerZ": 100,
+    "text": "Section  24"
+  },
+  {
+    "tag": "p",
+    "id": "ai-104",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-105",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-106",
+    "layerZ": 100,
+    "text": "Section  25"
+  },
+  {
+    "tag": "p",
+    "id": "ai-107",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-108",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-109",
+    "layerZ": 100,
+    "text": "Section  26"
+  },
+  {
+    "tag": "p",
+    "id": "ai-110",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-111",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-112",
+    "layerZ": 100,
+    "text": "Section  27"
+  },
+  {
+    "tag": "p",
+    "id": "ai-113",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-114",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-115",
+    "layerZ": 100,
+    "text": "Section  28"
+  },
+  {
+    "tag": "p",
+    "id": "ai-116",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-117",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-118",
+    "layerZ": 100,
+    "text": "Section  29"
+  },
+  {
+    "tag": "p",
+    "id": "ai-119",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-120",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-121",
+    "layerZ": 100,
+    "text": "Section  30"
+  },
+  {
+    "tag": "p",
+    "id": "ai-122",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-123",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-124",
+    "layerZ": 100,
+    "text": "Section  31"
+  },
+  {
+    "tag": "p",
+    "id": "ai-125",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-126",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-127",
+    "layerZ": 100,
+    "text": "Section  32"
+  },
+  {
+    "tag": "p",
+    "id": "ai-128",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-129",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-130",
+    "layerZ": 100,
+    "text": "Section  33"
+  },
+  {
+    "tag": "p",
+    "id": "ai-131",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-132",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-133",
+    "layerZ": 100,
+    "text": "Section  34"
+  },
+  {
+    "tag": "p",
+    "id": "ai-134",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-135",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-136",
+    "layerZ": 100,
+    "text": "Section  35"
+  },
+  {
+    "tag": "p",
+    "id": "ai-137",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-138",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-139",
+    "layerZ": 100,
+    "text": "Section  36"
+  },
+  {
+    "tag": "p",
+    "id": "ai-140",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-141",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-142",
+    "layerZ": 100,
+    "text": "Section  37"
+  },
+  {
+    "tag": "p",
+    "id": "ai-143",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-144",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-145",
+    "layerZ": 100,
+    "text": "Section  38"
+  },
+  {
+    "tag": "p",
+    "id": "ai-146",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-147",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-148",
+    "layerZ": 100,
+    "text": "Section  39"
+  },
+  {
+    "tag": "p",
+    "id": "ai-149",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-150",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-151",
+    "layerZ": 100,
+    "text": "Section  40"
+  },
+  {
+    "tag": "p",
+    "id": "ai-152",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-153",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-154",
+    "layerZ": 100,
+    "text": "Section  41"
+  },
+  {
+    "tag": "p",
+    "id": "ai-155",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-156",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-157",
+    "layerZ": 100,
+    "text": "Section  42"
+  },
+  {
+    "tag": "p",
+    "id": "ai-158",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-159",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-160",
+    "layerZ": 100,
+    "text": "Section  43"
+  },
+  {
+    "tag": "p",
+    "id": "ai-161",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-162",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-163",
+    "layerZ": 100,
+    "text": "Section  44"
+  },
+  {
+    "tag": "p",
+    "id": "ai-164",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-165",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-166",
+    "layerZ": 100,
+    "text": "Section  45"
+  },
+  {
+    "tag": "p",
+    "id": "ai-167",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-168",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-169",
+    "layerZ": 100,
+    "text": "Section  46"
+  },
+  {
+    "tag": "p",
+    "id": "ai-170",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-171",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-172",
+    "layerZ": 100,
+    "text": "Section  47"
+  },
+  {
+    "tag": "p",
+    "id": "ai-173",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-174",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-175",
+    "layerZ": 100,
+    "text": "Section  48"
+  },
+  {
+    "tag": "p",
+    "id": "ai-176",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-177",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-178",
+    "layerZ": 100,
+    "text": "Section  49"
+  },
+  {
+    "tag": "p",
+    "id": "ai-179",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-180",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-181",
+    "layerZ": 100,
+    "text": "Section  50"
+  },
+  {
+    "tag": "p",
+    "id": "ai-182",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-183",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-184",
+    "layerZ": 100,
+    "text": "Section  51"
+  },
+  {
+    "tag": "p",
+    "id": "ai-185",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-186",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-187",
+    "layerZ": 100,
+    "text": "Section  52"
+  },
+  {
+    "tag": "p",
+    "id": "ai-188",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-189",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-190",
+    "layerZ": 100,
+    "text": "Section  53"
+  },
+  {
+    "tag": "p",
+    "id": "ai-191",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-192",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-193",
+    "layerZ": 100,
+    "text": "Section  54"
+  },
+  {
+    "tag": "p",
+    "id": "ai-194",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-195",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-196",
+    "layerZ": 100,
+    "text": "Section  55"
+  },
+  {
+    "tag": "p",
+    "id": "ai-197",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-198",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-199",
+    "layerZ": 100,
+    "text": "Section  56"
+  },
+  {
+    "tag": "p",
+    "id": "ai-200",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-201",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-202",
+    "layerZ": 100,
+    "text": "Section  57"
+  },
+  {
+    "tag": "p",
+    "id": "ai-203",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-204",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-205",
+    "layerZ": 100,
+    "text": "Section  58"
+  },
+  {
+    "tag": "p",
+    "id": "ai-206",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-207",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-208",
+    "layerZ": 100,
+    "text": "Section  59"
+  },
+  {
+    "tag": "p",
+    "id": "ai-209",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-210",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-211",
+    "layerZ": 100,
+    "text": "Section  60"
+  },
+  {
+    "tag": "p",
+    "id": "ai-212",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-213",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-214",
+    "layerZ": 100,
+    "text": "Section  61"
+  },
+  {
+    "tag": "p",
+    "id": "ai-215",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-216",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-217",
+    "layerZ": 100,
+    "text": "Section  62"
+  },
+  {
+    "tag": "p",
+    "id": "ai-218",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-219",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-220",
+    "layerZ": 100,
+    "text": "Section  63"
+  },
+  {
+    "tag": "p",
+    "id": "ai-221",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-222",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-223",
+    "layerZ": 100,
+    "text": "Section  64"
+  },
+  {
+    "tag": "p",
+    "id": "ai-224",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-225",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-226",
+    "layerZ": 100,
+    "text": "Section  65"
+  },
+  {
+    "tag": "p",
+    "id": "ai-227",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-228",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-229",
+    "layerZ": 100,
+    "text": "Section  66"
+  },
+  {
+    "tag": "p",
+    "id": "ai-230",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-231",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-232",
+    "layerZ": 100,
+    "text": "Section  67"
+  },
+  {
+    "tag": "p",
+    "id": "ai-233",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-234",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-235",
+    "layerZ": 100,
+    "text": "Section  68"
+  },
+  {
+    "tag": "p",
+    "id": "ai-236",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-237",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-238",
+    "layerZ": 100,
+    "text": "Section  69"
+  },
+  {
+    "tag": "p",
+    "id": "ai-239",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-240",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-241",
+    "layerZ": 100,
+    "text": "Section  70"
+  },
+  {
+    "tag": "p",
+    "id": "ai-242",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-243",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-244",
+    "layerZ": 100,
+    "text": "Section  71"
+  },
+  {
+    "tag": "p",
+    "id": "ai-245",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-246",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-247",
+    "layerZ": 100,
+    "text": "Section  72"
+  },
+  {
+    "tag": "p",
+    "id": "ai-248",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-249",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-250",
+    "layerZ": 100,
+    "text": "Section  73"
+  },
+  {
+    "tag": "p",
+    "id": "ai-251",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-252",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-253",
+    "layerZ": 100,
+    "text": "Section  74"
+  },
+  {
+    "tag": "p",
+    "id": "ai-254",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-255",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-256",
+    "layerZ": 100,
+    "text": "Section  75"
+  },
+  {
+    "tag": "p",
+    "id": "ai-257",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-258",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-259",
+    "layerZ": 100,
+    "text": "Section  76"
+  },
+  {
+    "tag": "p",
+    "id": "ai-260",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-261",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-262",
+    "layerZ": 100,
+    "text": "Section  77"
+  },
+  {
+    "tag": "p",
+    "id": "ai-263",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-264",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-265",
+    "layerZ": 100,
+    "text": "Section  78"
+  },
+  {
+    "tag": "p",
+    "id": "ai-266",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-267",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-268",
+    "layerZ": 100,
+    "text": "Section  79"
+  },
+  {
+    "tag": "p",
+    "id": "ai-269",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-270",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-271",
+    "layerZ": 100,
+    "text": "Section  80"
+  },
+  {
+    "tag": "p",
+    "id": "ai-272",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-273",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-274",
+    "layerZ": 100,
+    "text": "Section  81"
+  },
+  {
+    "tag": "p",
+    "id": "ai-275",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-276",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-277",
+    "layerZ": 100,
+    "text": "Section  82"
+  },
+  {
+    "tag": "p",
+    "id": "ai-278",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-279",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-280",
+    "layerZ": 100,
+    "text": "Section  83"
+  },
+  {
+    "tag": "p",
+    "id": "ai-281",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-282",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-283",
+    "layerZ": 100,
+    "text": "Section  84"
+  },
+  {
+    "tag": "p",
+    "id": "ai-284",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-285",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-286",
+    "layerZ": 100,
+    "text": "Section  85"
+  },
+  {
+    "tag": "p",
+    "id": "ai-287",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-288",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-289",
+    "layerZ": 100,
+    "text": "Section  86"
+  },
+  {
+    "tag": "p",
+    "id": "ai-290",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-291",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-292",
+    "layerZ": 100,
+    "text": "Section  87"
+  },
+  {
+    "tag": "p",
+    "id": "ai-293",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-294",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-295",
+    "layerZ": 100,
+    "text": "Section  88"
+  },
+  {
+    "tag": "p",
+    "id": "ai-296",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-297",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-298",
+    "layerZ": 100,
+    "text": "Section  89"
+  },
+  {
+    "tag": "p",
+    "id": "ai-299",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-300",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-301",
+    "layerZ": 100,
+    "text": "Section  90"
+  },
+  {
+    "tag": "p",
+    "id": "ai-302",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-303",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-304",
+    "layerZ": 100,
+    "text": "Section  91"
+  },
+  {
+    "tag": "p",
+    "id": "ai-305",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-306",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-307",
+    "layerZ": 100,
+    "text": "Section  92"
+  },
+  {
+    "tag": "p",
+    "id": "ai-308",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-309",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-310",
+    "layerZ": 100,
+    "text": "Section  93"
+  },
+  {
+    "tag": "p",
+    "id": "ai-311",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-312",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-313",
+    "layerZ": 100,
+    "text": "Section  94"
+  },
+  {
+    "tag": "p",
+    "id": "ai-314",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-315",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-316",
+    "layerZ": 100,
+    "text": "Section  95"
+  },
+  {
+    "tag": "p",
+    "id": "ai-317",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-318",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-319",
+    "layerZ": 100,
+    "text": "Section  96"
+  },
+  {
+    "tag": "p",
+    "id": "ai-320",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-321",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-322",
+    "layerZ": 100,
+    "text": "Section  97"
+  },
+  {
+    "tag": "p",
+    "id": "ai-323",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-324",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-325",
+    "layerZ": 100,
+    "text": "Section  98"
+  },
+  {
+    "tag": "p",
+    "id": "ai-326",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-327",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-328",
+    "layerZ": 100,
+    "text": "Section  99"
+  },
+  {
+    "tag": "p",
+    "id": "ai-329",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-330",
+    "layerZ": 100
+  },
+  {
+    "tag": "h3",
+    "id": "ai-331",
+    "layerZ": 100,
+    "text": "Section  100"
+  },
+  {
+    "tag": "p",
+    "id": "ai-332",
+    "layerZ": 100,
+    "text": "This is filler content. Keep scrolling to find the navigation button."
+  },
+  {
+    "tag": "div",
+    "id": "ai-333",
     "layerZ": 100,
     "position": "relative"
   },
   {
     "tag": "h3",
-    "id": "ai-338",
+    "id": "ai-334",
     "layerZ": 100,
-    "text": "Enter Code to Finish:"
+    "text": "Enter Code to Proceed to Step 17:"
   },
   {
     "tag": "form",
-    "id": "ai-339",
+    "id": "ai-335",
     "layerZ": 100
   },
   {
     "tag": "input",
-    "id": "ai-340",
+    "id": "ai-336",
     "interactive": 1,
     "layerZ": 100,
-    "visibility": 0,
     "cursor": "text",
     "placeholder": "Enter 6-character code",
     "text": "Enter 6-character code"
   },
   {
     "tag": "button",
-    "id": "ai-341",
+    "id": "ai-337",
     "interactive": 1,
     "layerZ": 100,
     "cursor": "not-allowed",
@@ -359,13 +1977,29 @@
   },
   {
     "tag": "div",
-    "id": "ai-342",
+    "id": "ai-338",
     "layerZ": 100,
     "position": "relative"
   },
   {
     "tag": "button",
-    "id": "ai-343",
+    "id": "ai-339",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "pointer",
+    "text": "Continue Journey"
+  },
+  {
+    "tag": "button",
+    "id": "ai-340",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "pointer",
+    "text": "Next Section"
+  },
+  {
+    "tag": "button",
+    "id": "ai-341",
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
@@ -373,11 +2007,27 @@
   },
   {
     "tag": "button",
+    "id": "ai-342",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "pointer",
+    "text": "Continue Reading"
+  },
+  {
+    "tag": "button",
+    "id": "ai-343",
+    "interactive": 1,
+    "layerZ": 100,
+    "cursor": "pointer",
+    "text": "Proceed Forward"
+  },
+  {
+    "tag": "button",
     "id": "ai-344",
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
-    "text": "Move On"
+    "text": "Click Here"
   },
   {
     "tag": "button",
@@ -385,7 +2035,7 @@
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
-    "text": "Next"
+    "text": "Next Page"
   },
   {
     "tag": "button",
@@ -401,7 +2051,7 @@
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
-    "text": "Continue Reading"
+    "text": "Go Forward"
   },
   {
     "tag": "button",
@@ -409,246 +2059,29 @@
     "interactive": 1,
     "layerZ": 100,
     "cursor": "pointer",
-    "text": "Click Here"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5283",
-    "interactive": 1,
-    "layerZ": 100,
-    "cursor": "pointer",
-    "text": "Proceed Forward"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5284",
-    "interactive": 1,
-    "layerZ": 100,
-    "cursor": "pointer",
-    "text": "Continue"
+    "text": "Move On"
   },
   {
     "tag": "div",
-    "id": "ai-5356",
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Moving!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5369",
-    "layerZ": 240,
+    "id": "ai-2043",
+    "layerZ": 501,
     "position": "absolute",
     "cursor": "pointer",
     "text": "Here!"
   },
   {
     "tag": "div",
-    "id": "ai-5370",
-    "layerZ": 417,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Here!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5377",
-    "layerZ": 9998,
-    "position": "fixed"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5378",
-    "interactive": 1,
-    "layerZ": 9998,
-    "visibility": 0,
-    "position": "absolute",
-    "cursor": "pointer"
-  },
-  {
-    "tag": "h3",
-    "id": "ai-5382",
-    "layerZ": 9998,
-    "text": "You have won a prize!"
-  },
-  {
-    "tag": "p",
-    "id": "ai-5383",
-    "layerZ": 9998,
-    "text": "This is a popup message.  Click X to close."
-  },
-  {
-    "tag": "button",
-    "id": "ai-5384",
-    "interactive": 1,
-    "layerZ": 9998,
-    "cursor": "pointer",
-    "text": "Close"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5385",
-    "layerZ": 416,
+    "id": "ai-2044",
+    "layerZ": 336,
     "position": "absolute",
     "cursor": "pointer",
     "text": "Click Me!"
   },
   {
     "tag": "div",
-    "id": "ai-5386",
-    "layerZ": 448,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Link!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5387",
-    "layerZ": 563,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Try This!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5388",
-    "layerZ": 318,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Click Me!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5389",
-    "layerZ": 260,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Click Here!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5390",
-    "layerZ": 332,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Here!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5391",
-    "layerZ": 350,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Click Me!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5392",
-    "layerZ": 445,
-    "position": "absolute",
-    "cursor": "pointer",
-    "text": "Link!"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5393",
-    "layerZ": 9998,
-    "position": "fixed"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5394",
-    "interactive": 1,
-    "layerZ": 9998,
-    "position": "absolute",
-    "cursor": "pointer"
-  },
-  {
-    "tag": "h3",
-    "id": "ai-5398",
-    "layerZ": 9998,
-    "text": "Limited time offer!"
-  },
-  {
-    "tag": "p",
-    "id": "ai-5399",
-    "layerZ": 9998,
-    "text": "This is a popup message.  Click X to close."
-  },
-  {
-    "tag": "button",
-    "id": "ai-5400",
-    "interactive": 1,
-    "layerZ": 9998,
-    "cursor": "pointer",
-    "text": "Close"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5401",
-    "layerZ": 9998,
-    "position": "fixed"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5402",
-    "interactive": 1,
-    "layerZ": 9998,
-    "position": "absolute",
-    "cursor": "pointer"
-  },
-  {
-    "tag": "h3",
-    "id": "ai-5406",
-    "layerZ": 9998,
-    "text": "Subscribe to our newsletter!"
-  },
-  {
-    "tag": "p",
-    "id": "ai-5407",
-    "layerZ": 9998,
-    "text": "This is a popup message.  Click X to close."
-  },
-  {
-    "tag": "button",
-    "id": "ai-5408",
-    "interactive": 1,
-    "layerZ": 9998,
-    "cursor": "pointer",
-    "text": "Close"
-  },
-  {
-    "tag": "div",
-    "id": "ai-5409",
-    "layerZ": 9998,
-    "position": "fixed"
-  },
-  {
-    "tag": "button",
-    "id": "ai-5410",
-    "interactive": 1,
-    "layerZ": 9998,
-    "position": "absolute",
-    "cursor": "pointer"
-  },
-  {
-    "tag": "h3",
-    "id": "ai-5414",
-    "layerZ": 9998,
-    "text": "Click here for amazing deals!"
-  },
-  {
-    "tag": "p",
-    "id": "ai-5415",
-    "layerZ": 9998,
-    "text": "This is a popup message.  Click X to close."
-  },
-  {
-    "tag": "button",
-    "id": "ai-5416",
-    "interactive": 1,
-    "layerZ": 9998,
-    "cursor": "pointer",
-    "text": "Close"
+    "id": "ai-2045",
+    "layerZ": 10001,
+    "position": "fixed",
+    "text": "❌  Wrong Button! Try Again!"
   }
 ]

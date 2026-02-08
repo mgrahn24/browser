@@ -12,6 +12,12 @@ export class AIClient {
     private lastAnalyzeDOMLogPath: string | null = null;
     private logAICalls: boolean;
 
+    // Cumulative token usage tracking
+    private totalInputTokens = 0;
+    private totalOutputTokens = 0;
+    private static readonly INPUT_COST_PER_MILLION = 0.15;
+    private static readonly OUTPUT_COST_PER_MILLION = 0.60;
+
     constructor(logAICalls: boolean = false) {
         if (!process.env.GROQ_API_KEY) {
             console.warn('⚠️ GROQ_API_KEY not found in .env');
@@ -22,22 +28,75 @@ export class AIClient {
 
         this.logAICalls = logAICalls;
 
-        // Ensure logs directory exists only if logging is enabled
+        // Ensure logs directory exists for token usage tracking
+        const logsDir = path.join(process.cwd(), 'logs');
+        if (!fs.existsSync(logsDir)) {
+            fs.mkdirSync(logsDir, { recursive: true });
+        }
         if (this.logAICalls) {
-            const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
-            if (!fs.existsSync(logsDir)) {
-                fs.mkdirSync(logsDir, { recursive: true });
+            const aiCallsDir = path.join(logsDir, 'ai-calls');
+            if (!fs.existsSync(aiCallsDir)) {
+                fs.mkdirSync(aiCallsDir, { recursive: true });
             }
         }
     }
 
+    getTokenUsageSummary(): { totalInputTokens: number; totalOutputTokens: number; totalTokens: number; totalCalls: number; cost: string } {
+        const inputCost = (this.totalInputTokens / 1_000_000) * AIClient.INPUT_COST_PER_MILLION;
+        const outputCost = (this.totalOutputTokens / 1_000_000) * AIClient.OUTPUT_COST_PER_MILLION;
+        return {
+            totalInputTokens: this.totalInputTokens,
+            totalOutputTokens: this.totalOutputTokens,
+            totalTokens: this.totalInputTokens + this.totalOutputTokens,
+            totalCalls: this.callCounter,
+            cost: `$${(inputCost + outputCost).toFixed(4)}`
+        };
+    }
+
     private logAICall(type: string, prompt: string, input: any, response: any, timing: { durationMs: number }, tokenUsage?: any): string | null {
+        this.callCounter++;
+
+        // Always track token usage, even if file logging is disabled
+        if (tokenUsage) {
+            this.totalInputTokens += tokenUsage.prompt_tokens || 0;
+            this.totalOutputTokens += tokenUsage.completion_tokens || 0;
+        }
+
+        const inputCost = (this.totalInputTokens / 1_000_000) * AIClient.INPUT_COST_PER_MILLION;
+        const outputCost = (this.totalOutputTokens / 1_000_000) * AIClient.OUTPUT_COST_PER_MILLION;
+        const totalCost = inputCost + outputCost;
+
+        console.log(`[AI] Token usage — this call: ${tokenUsage?.prompt_tokens || 0} in / ${tokenUsage?.completion_tokens || 0} out | cumulative: ${this.totalInputTokens} in / ${this.totalOutputTokens} out | cost: $${totalCost.toFixed(4)}`);
+
+        // Write cumulative summary to logs/token_usage.json
+        try {
+            const summaryPath = path.join(process.cwd(), 'logs', 'token_usage.json');
+            const summaryData = {
+                totalInputTokens: this.totalInputTokens,
+                totalOutputTokens: this.totalOutputTokens,
+                totalTokens: this.totalInputTokens + this.totalOutputTokens,
+                totalCalls: this.callCounter,
+                cost: {
+                    input: `$${inputCost.toFixed(4)}`,
+                    output: `$${outputCost.toFixed(4)}`,
+                    total: `$${totalCost.toFixed(4)}`
+                },
+                rates: {
+                    inputPerMillion: `$${AIClient.INPUT_COST_PER_MILLION}`,
+                    outputPerMillion: `$${AIClient.OUTPUT_COST_PER_MILLION}`
+                },
+                lastUpdated: new Date().toISOString()
+            };
+            fs.writeFileSync(summaryPath, JSON.stringify(summaryData, null, 2));
+        } catch (error) {
+            console.error('[AI] Failed to write token usage summary:', error);
+        }
+
         if (!this.logAICalls) {
             return null;
         }
 
         try {
-            this.callCounter++;
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
             const filename = `${timestamp}_${this.callCounter}_${type}.json`;
             const logsDir = path.join(process.cwd(), 'logs', 'ai-calls');
@@ -50,6 +109,16 @@ export class AIClient {
                 model: this.model,
                 durationMs: timing.durationMs,
                 tokenUsage,
+                cumulativeUsage: {
+                    totalInputTokens: this.totalInputTokens,
+                    totalOutputTokens: this.totalOutputTokens,
+                    totalTokens: this.totalInputTokens + this.totalOutputTokens,
+                    cost: {
+                        input: `$${inputCost.toFixed(4)}`,
+                        output: `$${outputCost.toFixed(4)}`,
+                        total: `$${totalCost.toFixed(4)}`
+                    }
+                },
                 prompt,
                 input,
                 response
@@ -106,6 +175,7 @@ export class AIClient {
     ELEMENT SELECTION SPECIFICITY:
     - ALWAYS prefer the MOST SPECIFIC element (deepest in hierarchy) over containers
     - If a parent element has "ch" (children), and one child is the actual target, select the CHILD not the parent
+    - Pay attention to CSS Cursor, if c is "pointer", regardless of the tag, this element can likely be treated like a button and clicked.
     - For drag targets: If you see a container holding multiple slots/zones, target the specific empty slot element
     - General rule: When in doubt, prefer leaf nodes (elements without "ch" or with minimal children) over branch nodes
     
@@ -123,7 +193,7 @@ export class AIClient {
     - draw: { selector: string, startX: number, startY: number, endX: number, endY: number } (Mouse drag by coordinates on a specific element - REQUIRED for: drawing on canvas, tracing paths, creating signatures, dragging sliders. MUST specify the selector of the canvas/drawing element. IMPORTANT: Coordinates are RELATIVE to the element's top-left corner (0,0 = element origin). For a canvas with bbox: {x: 100, y: 200, w: 400, h: 200}, valid draw coordinates are startX/endX between 0-400 and startY/endY between 0-200, NOT absolute viewport coordinates.)
     - hover: { selector: string, ms: number } (Hover)
     - wait: { ms: number } (Wait)
-    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible, such as when the element isn't in the DOM or you suspect there is a shadow DOM. useful if you know you need to click something but can't seem to find it in the dom)
+    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible, such as when the element isn't in the DOM or you suspect there is a shadow DOM. useful if you know you need to click something but can't seem to find it in the dom, prioritise direct clicking on elements first)
 
 
     INTERACTION GUIDELINES:
@@ -140,8 +210,8 @@ export class AIClient {
     ${pastAttempts || "None."}
     - If past attempts are listed and DID NOT result in a DOM change:
         - If you have tried to click something multiple times but have failed to cause a change, FIrst close or complete all things that might be blocking, like popups or modals, then USE THE clickEverywhere ACTION to try to click around the page and unstick the situation 
-        - Check the information available, and assess if the actions were actually completed, and a now a new action is needed
-        - Selector Audit: Look at the Target selectors used in the failed actions. Were they correct? Re-examine the DOM hierarchy and consider if you targeted the wrong element (e.g., a div instead of its child button, or a hidden element).
+        - Check the information available, especially the changes to the dom above, it a change to the dom indicates that a new option or piece of information is available, that is likely related to the next required action
+        - Selector Audit: Look at the Target selectors used in the failed actions. Were they correct? Re-examine the DOM hierarchy and consider if you targeted the wrong element (e.g., a parent instead of a child element).
         - Form Completion Check: If you filled an input but didn't submit the form, look for submit buttons nearby and click them before trying other actions.
         - Maybe you chose the wrong action, try something different, the next most likely thing you think you need to do to proceed
         - If you tried to click an element many times and failed, or if you know an element needs to be clciked but you can't target it directly, USE THE clickEverywhere action.
