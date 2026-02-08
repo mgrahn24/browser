@@ -172,16 +172,11 @@ export class AIClient {
     - ch: Children array (nested elements) - USE THIS to understand DOM hierarchy
     - bbox: Bounding box {x, y, w, h} for canvas elements - viewport coordinates where x,y is top-left corner, w is width, h is height
 
-    ELEMENT SELECTION SPECIFICITY:
-    - ALWAYS prefer the MOST SPECIFIC element (deepest in hierarchy) over containers
-    - If a parent element has "ch" (children), and one child is the actual target, select the CHILD not the parent
+    ELEMENT SELECTION:
     - Pay attention to CSS Cursor, if c is "pointer", regardless of the tag, this element can likely be treated like a button and clicked.
-    - For drag targets: If you see a container holding multiple slots/zones, target the specific empty slot element
-    - General rule: When in doubt, prefer leaf nodes (elements without "ch" or with minimal children) over branch nodes
-    
+
     DATA ACCURACY RULES:
-    - Don't make up information that should be provided by the page
-    - ONLY USE REVEALED DATA: Only enter info into inputs if you know what the value should be based on available information.
+    - Don't make up information that should be provided by the page, Only enter info into inputs if you know what the value should be based on available information.
     - Before commiting to an action carefully consider if you cave already completed that action based on the data you have.
 
     ACTION SCHEMES:
@@ -193,8 +188,6 @@ export class AIClient {
     - draw: { selector: string, startX: number, startY: number, endX: number, endY: number } (Mouse drag by coordinates on a specific element - REQUIRED for: drawing on canvas, tracing paths, creating signatures, dragging sliders. MUST specify the selector of the canvas/drawing element. IMPORTANT: Coordinates are RELATIVE to the element's top-left corner (0,0 = element origin). For a canvas with bbox: {x: 100, y: 200, w: 400, h: 200}, valid draw coordinates are startX/endX between 0-400 and startY/endY between 0-200, NOT absolute viewport coordinates.)
     - hover: { selector: string, ms: number } (Hover)
     - wait: { ms: number } (Wait)
-    - clickEverywhere: {} (Grid-based click spam across entire viewport to unstick situations where direct element targeting is impossible, such as when the element isn't in the DOM or you suspect there is a shadow DOM. useful if you know you need to click something but can't seem to find it in the dom, prioritise direct clicking on elements first)
-
 
     INTERACTION GUIDELINES:
     1. Focus on the main goal - the system can click through overlays and popups automatically
@@ -209,7 +202,6 @@ export class AIClient {
     PAST ATTEMPTS:
     ${pastAttempts || "None."}
     - If past attempts are listed and DID NOT result in a DOM change:
-        - If you have tried to click something multiple times but have failed to cause a change, FIrst close or complete all things that might be blocking, like popups or modals, then USE THE clickEverywhere ACTION to try to click around the page and unstick the situation 
         - Check the information available, especially the changes to the dom above, it a change to the dom indicates that a new option or piece of information is available, that is likely related to the next required action
         - Selector Audit: Look at the Target selectors used in the failed actions. Were they correct? Re-examine the DOM hierarchy and consider if you targeted the wrong element (e.g., a parent instead of a child element).
         - Form Completion Check: If you filled an input but didn't submit the form, look for submit buttons nearby and click them before trying other actions.
@@ -314,28 +306,6 @@ export class AIClient {
                                                     ms: { type: "integer" }
                                                 },
                                                 required: ["type", "ms"]
-                                            },
-                                            {
-                                                type: "object",
-                                                properties: {
-                                                    type: { const: "clickEverywhere" }
-                                                },
-                                                required: ["type"]
-                                            },
-                                            {
-                                                type: "object",
-                                                properties: {
-                                                    type: { const: "brute_force_form" },
-                                                    optionSelectors: {
-                                                        type: "array",
-                                                        items: { type: "string" }
-                                                    },
-                                                    submitSelectors: {
-                                                        type: "array",
-                                                        items: { type: "string" }
-                                                    }
-                                                },
-                                                required: ["type", "optionSelectors", "submitSelectors"]
                                             }
                                         ]
                                     }

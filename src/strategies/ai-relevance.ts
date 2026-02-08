@@ -25,6 +25,7 @@ export class AIRelevanceStrategy implements Strategy {
     private formBruteState: Map<string, Set<string>> = new Map();
     private debugMode: boolean;
     private usePatternFiltering: boolean;
+    private logAICalls: boolean;
     private autoMode: boolean = false;
 
     constructor(actionTimeout: number = 200, debugMode: boolean = false, usePatternFiltering: boolean = true, logAICalls: boolean = false) {
@@ -33,6 +34,7 @@ export class AIRelevanceStrategy implements Strategy {
         this.actionTimeout = actionTimeout;
         this.debugMode = debugMode;
         this.usePatternFiltering = usePatternFiltering;
+        this.logAICalls = logAICalls;
         console.log(`[AI] Pattern filtering: ${usePatternFiltering ? 'ENABLED' : 'DISABLED'}`);
         console.log(`[AI] Call logging: ${logAICalls ? 'ENABLED' : 'DISABLED'}`);
     }
@@ -78,16 +80,6 @@ export class AIRelevanceStrategy implements Strategy {
 
         // 1. Get simplified DOM
         console.log('[AI] Scanning DOM structure...');
-        // We use the private helper from HierarchyScanStrategy by duplicating logic or exposing it.
-        // Since it's private, I'll essentially reuse the shared concept or just update HierarchyScan to be importable.
-        // For speed, I'll treat HierarchyScan as a helper if I can, or just duplicate the browser function.
-        // Actually, let's just use the evaluate code from HierarchyScan.
-        // BETTER: Let's refactor HierarchyScan to expose its buildHierarchy function string or logic.
-        // For now, to avoid breaking changes, I'll copy the browser-side function which is robust.
-
-        // Actually, I can just execute the hierarchy strategy and assume it might return data if I changed the interface.
-        // But StrategyResult is limited.
-        // I will implement the DOM build logic directly here to be safe and self-contained.
 
         const patternsToSend = this.usePatternFiltering
             ? this.noisePatterns.map(p => ({
@@ -124,26 +116,28 @@ export class AIRelevanceStrategy implements Strategy {
         console.log(`[AI] Sending to Groq...`);
 
         // Log the tree to a file for validation
-        try {
-            const logsDir = path.join(process.cwd(), 'logs');
-            if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir);
+        if (this.logAICalls) {
+            try {
+                const logsDir = path.join(process.cwd(), 'logs');
+                if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir);
 
-            // Log recursive tree (compressed for AI reference)
-            fs.writeFileSync(
-                path.join(logsDir, 'dom_scan_latest.json'),
-                JSON.stringify(tree, null, 2)
-            );
+                // Log recursive tree (compressed for AI reference)
+                fs.writeFileSync(
+                    path.join(logsDir, 'dom_scan_latest.json'),
+                    JSON.stringify(tree, null, 2)
+                );
 
-            // Log flat important elements (uncompressed for humans)
-            const importantList = this.flattenTree(tree).map(n => this.uncompressNode(n));
-            fs.writeFileSync(
-                path.join(logsDir, 'important_elements.json'),
-                JSON.stringify(importantList, null, 2)
-            );
+                // Log flat important elements (uncompressed for humans)
+                const importantList = this.flattenTree(tree).map(n => this.uncompressNode(n));
+                fs.writeFileSync(
+                    path.join(logsDir, 'important_elements.json'),
+                    JSON.stringify(importantList, null, 2)
+                );
 
-            console.log('[AI] Logged survivors to logs/dom_scan_latest.json and logs/important_elements.json');
-        } catch (err) {
-            console.error('[AI] Failed to write log files:', err);
+                console.log('[AI] Logged survivors to logs/dom_scan_latest.json and logs/important_elements.json');
+            } catch (err) {
+                console.error('[AI] Failed to write log files:', err);
+            }
         }
 
         // Pattern-based noise reduction (first on round 3, then every 20 rounds)
@@ -282,112 +276,10 @@ export class AIRelevanceStrategy implements Strategy {
                 }
             }
         }
-        // AUTOMATIC ESCALATION: Directly trigger clickEverywhere if too many clicks have failed
-        const clickActionCount = this.pastAttempts.filter(attempt => attempt.includes('[CLICK]')).length;
         let analysis: any;
 
-        if (clickActionCount >= 6) {
-            console.log(`\n🚨🚨🚨 AUTOMATIC ESCALATION TRIGGERED 🚨🚨🚨`);
-            console.log(`   📊 ${clickActionCount} failed CLICK actions detected`);
-            console.log(`   🔥 Bypassing AI - directly executing clickEverywhere strategy\n`);
-
-            // Directly return clickEverywhere action without calling AI
-            analysis = {
-                planDescription: `AUTOMATIC ESCALATION: ${clickActionCount} clicks failed - triggering clickEverywhere grid`,
-                actions: [
-                    { type: 'clickEverywhere', description: 'Emergency grid click to unstick (50x50 = 2500 clicks)' }
-                ]
-            };
-        } else {
-            console.log('[AI] Requesting analysis...');
-            analysis = await this.ai.analyzeDOM(tree, pastAttemptsContext);
-        }
-
-        // Periodic Noise Reduction - runs every 2 rounds to filter out filler content
-        this.roundsSinceNoiseClean++;
-        if (this.roundsSinceNoiseClean >= 9999) {
-            console.log('[AI] Periodically identifying noise in the background...');
-            this.roundsSinceNoiseClean = 0;
-            // Run in background without blocking current action execution
-            this.ai.identifyNoise(tree).then(newNoiseIds => {
-                if (newNoiseIds && newNoiseIds.length > 0) {
-                    const flatTree = this.flattenTree(tree);
-
-                    // Safety check: Don't filter if tree is already small
-                    const currentTreeSize = flatTree.length;
-                    if (currentTreeSize < 20) {
-                        console.log(`⚠️ [AI] Tree only has ${currentTreeSize} elements - skipping noise reduction to prevent over-filtering`);
-                        return;
-                    }
-
-                    // Safety check: Don't filter out critical elements
-                    const criticalIds = ['ai-1', 'ai-2']; // body and root divs
-                    const filteredNoiseIds = newNoiseIds.filter(id => !criticalIds.includes(id));
-
-                    if (filteredNoiseIds.length === 0) {
-                        return;
-                    }
-
-                    // Safety check: Calculate what would remain after filtering
-                    const newNoiseIdsSet = new Set(filteredNoiseIds);
-                    const wouldRemain = flatTree.filter(node => !newNoiseIdsSet.has(node.id) && !this.ignoreList.has(node.id));
-                    const remainingCount = wouldRemain.length;
-
-                    // Don't filter if it would leave too few elements
-                    if (remainingCount < 30) {
-                        console.log(`⚠️ [AI] Filtering would leave only ${remainingCount} elements - skipping to prevent over-filtering`);
-                        return;
-                    }
-
-                    // Don't filter more than 70% of the current visible tree
-                    const currentVisible = flatTree.filter(node => !this.ignoreList.has(node.id)).length;
-                    const percentageToFilter = (filteredNoiseIds.length / currentVisible) * 100;
-                    if (percentageToFilter > 70) {
-                        console.log(`⚠️ [AI] Would filter ${percentageToFilter.toFixed(0)}% of visible tree - skipping to prevent over-filtering`);
-                        return;
-                    }
-
-                    // Safety check: Ensure minimum interactive elements remain
-                    const remainingInteractive = wouldRemain.filter(node => node.i === 1).length;
-                    if (remainingInteractive < 3) {
-                        console.log(`⚠️ [AI] Filtering would leave only ${remainingInteractive} interactive elements - skipping to prevent over-filtering`);
-                        return;
-                    }
-
-                    let addedCount = 0;
-
-                    filteredNoiseIds.forEach(id => {
-                        if (!this.ignoreList.has(id)) {
-                            this.ignoreList.add(id);
-                            addedCount++;
-                            // Capture full node data for logging
-                            const node = flatTree.find(n => n.id === id);
-                            if (node) {
-                                this.ignoreDetails.set(id, this.uncompressNode(node));
-                            } else {
-                                this.ignoreDetails.set(id, { id, note: "Node not found in current tree" });
-                            }
-                        }
-                    });
-
-                    if (addedCount > 0) {
-                        const totalList = Array.from(this.ignoreDetails.values());
-                        console.log(`[AI] Added ${addedCount} elements to ignore list (${totalList.length} total).`);
-
-                        // Log to file
-                        const logDir = path.join(process.cwd(), 'logs');
-                        if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
-                        fs.writeFileSync(
-                            path.join(logDir, 'ignored_elements.json'),
-                            JSON.stringify(totalList, null, 2)
-                        );
-                        console.log('[AI] Logged detailed ignored elements to logs/ignored_elements.json');
-                    }
-                }
-            }).catch(err => {
-                console.warn('[AI] Noise identification failed, skipping.', err.message);
-            });
-        }
+        console.log('[AI] Requesting analysis...');
+        analysis = await this.ai.analyzeDOM(tree, pastAttemptsContext);
 
         // 3. Log Results
         console.log(`\n[AI] Plan: ${analysis.planDescription || 'None'}`);
@@ -690,37 +582,39 @@ export class AIRelevanceStrategy implements Strategy {
                 }
 
                 // Log changes to file
-                try {
-                    const fs = await import('fs');
-                    const path = await import('path');
-                    const logsDir = path.join(process.cwd(), 'logs');
-                    if (!fs.existsSync(logsDir)) {
-                        fs.mkdirSync(logsDir, { recursive: true });
+                if (this.logAICalls) {
+                    try {
+                        const fs = await import('fs');
+                        const path = await import('path');
+                        const logsDir = path.join(process.cwd(), 'logs');
+                        if (!fs.existsSync(logsDir)) {
+                            fs.mkdirSync(logsDir, { recursive: true });
+                        }
+
+                        const changeLog = {
+                            timestamp: new Date().toISOString(),
+                            round: this.roundCounter,
+                            urlChanged: urlChanged ? { from: initialUrl, to: finalUrl } : null,
+                            structuralChanges: {
+                                removed: removedIds,
+                                added: addedIds
+                            },
+                            contentChanges: {
+                                textChanged: changes.textChanged,
+                                valueChanged: changes.valueChanged,
+                                checkedChanged: changes.checkedChanged
+                            },
+                            actions: actions
+                        };
+
+                        fs.writeFileSync(
+                            path.join(logsDir, 'dom_changes_latest.json'),
+                            JSON.stringify(changeLog, null, 2)
+                        );
+                        console.log('   📝 Detailed changes logged to logs/dom_changes_latest.json');
+                    } catch (err) {
+                        console.error('   ⚠️ Failed to write change log:', err);
                     }
-
-                    const changeLog = {
-                        timestamp: new Date().toISOString(),
-                        round: this.roundCounter,
-                        urlChanged: urlChanged ? { from: initialUrl, to: finalUrl } : null,
-                        structuralChanges: {
-                            removed: removedIds,
-                            added: addedIds
-                        },
-                        contentChanges: {
-                            textChanged: changes.textChanged,
-                            valueChanged: changes.valueChanged,
-                            checkedChanged: changes.checkedChanged
-                        },
-                        actions: actions
-                    };
-
-                    fs.writeFileSync(
-                        path.join(logsDir, 'dom_changes_latest.json'),
-                        JSON.stringify(changeLog, null, 2)
-                    );
-                    console.log('   📝 Detailed changes logged to logs/dom_changes_latest.json');
-                } catch (err) {
-                    console.error('   ⚠️ Failed to write change log:', err);
                 }
 
                 // Persistence Guard: If we were brute-forcing, checking if the form is still there
