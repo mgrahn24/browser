@@ -342,6 +342,12 @@ export class AIRelevanceStrategy implements Strategy {
                         const sourceSelector = this.resolveSelector(action.source);
                         const targetSelector = this.resolveSelector(action.target);
 
+                        // Scroll both elements into view before dragging
+                        const sourceLocator = page.locator(sourceSelector);
+                        const targetLocator = page.locator(targetSelector);
+                        await sourceLocator.scrollIntoViewIfNeeded({ timeout: this.actionTimeout });
+                        await targetLocator.scrollIntoViewIfNeeded({ timeout: this.actionTimeout });
+
                         // Promote source element
                         await withZIndexPromotion(page, sourceSelector, async () => {
                             // Promote target element as well
@@ -349,8 +355,8 @@ export class AIRelevanceStrategy implements Strategy {
                                 // Extended delay for drag actions to ensure z-index promotion fully takes effect
                                 // This prevents the first drag from failing due to incomplete promotion
                                 await page.waitForTimeout(1000);
-                                const source = await page.locator(sourceSelector).boundingBox();
-                                const target = await page.locator(targetSelector).boundingBox();
+                                const source = await sourceLocator.boundingBox();
+                                const target = await targetLocator.boundingBox();
                                 if (source && target) {
                                     await page.mouse.move(source.x + source.width / 2, source.y + source.height / 2);
                                     await page.mouse.down();
