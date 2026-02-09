@@ -4,6 +4,7 @@
   "description": "Fast browser automation for navigating challenge screens with Groq AI",
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "npx playwright install chromium",
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "dev": "ts-node src/index.ts --headless false",
