@@ -2,6 +2,9 @@
 
 Fast browser automation for navigating challenge screens with Groq AI assistance.
 
+# Demo video:
+https://drive.google.com/open?id=1zDGIgYve-VRetvrZ9_UjdolLrDpfa4aE
+
 # Design and Architecture
 Key ideas/goals:
 
